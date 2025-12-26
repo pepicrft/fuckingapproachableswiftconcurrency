@@ -275,13 +275,12 @@ let name = account.bankName()  // await не нужен
 <div class="tip">
 <h4>Approachable Concurrency: меньше трения</h4>
 
-[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) упрощает ментальную модель. Чтобы включить, установите `SWIFT_VERSION` в `6` (или `5` с `-enable-upcoming-feature`) и `SWIFT_APPROACHABLE_CONCURRENCY` в `YES`. Новые проекты Xcode 26 имеют оба включёнными по умолчанию.
+[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) упрощает ментальную модель с помощью двух настроек сборки Xcode:
 
-- Всё выполняется на MainActor, если вы не скажете иначе
-- Когда нужна CPU-интенсивная работа вне главного потока, используйте `@concurrent`
-- `nonisolated` async функции остаются на акторе вызывающего вместо прыжка на фоновый поток
+- **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`: Всё выполняется на MainActor, если вы не скажете иначе
+- **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`: `nonisolated` async функции остаются на акторе вызывающего вместо прыжка на фоновый поток
 
-Ваш код выполняется на MainActor. Когда нужна фоновая работа, пометьте её `@concurrent`. Вот и всё.
+Новые проекты Xcode 26 имеют оба включёнными по умолчанию. Когда нужна CPU-интенсивная работа вне главного потока, используйте `@concurrent`.
 
 <pre><code class="language-swift">// Выполняется на MainActor (по умолчанию)
 func updateUI() async { }
@@ -367,13 +366,13 @@ final class ThreadSafeCache: @unchecked Sendable {
 <div class="tip">
 <h4>Approachable Concurrency: меньше трения</h4>
 
-С [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) ошибки Sendable становятся намного реже. Чтобы включить, установите `SWIFT_VERSION` в `6` (или `5` с `-enable-upcoming-feature`) и `SWIFT_APPROACHABLE_CONCURRENCY` в `YES`. Новые проекты Xcode 26 имеют оба включёнными по умолчанию.
+С [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) ошибки Sendable становятся намного реже:
 
 - Если код не пересекает границы изоляции, вам не нужен Sendable
 - Async функции остаются на акторе вызывающего вместо прыжка на фоновый поток
 - Компилятор умнее в определении, когда значения используются безопасно
 
-Ваш код выполняется на MainActor, если вы явно не откажетесь. Когда вам нужен параллелизм, пометьте функции `@concurrent`, и тогда думайте о Sendable.
+Включите, установив `SWIFT_DEFAULT_ACTOR_ISOLATION` в `MainActor` и `SWIFT_APPROACHABLE_CONCURRENCY` в `YES`. Новые проекты Xcode 26 имеют оба включёнными по умолчанию. Когда вам нужен параллелизм, пометьте функции `@concurrent`, и тогда думайте о Sendable.
 </div>
 
 <div class="analogy">

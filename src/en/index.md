@@ -275,13 +275,12 @@ let name = account.bankName()  // No await needed
 <div class="tip">
 <h4>Approachable Concurrency: Less Friction</h4>
 
-[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) simplifies the mental model. To enable it, set `SWIFT_VERSION` to `6` (or `5` with `-enable-upcoming-feature`) and `SWIFT_APPROACHABLE_CONCURRENCY` to `YES`. New Xcode 26 projects have both enabled by default.
+[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) simplifies the mental model with two Xcode build settings:
 
-- Everything runs on MainActor unless you say otherwise
-- When you need CPU-intensive work off the main thread, use `@concurrent`
-- `nonisolated` async functions stay on the caller's actor instead of jumping to a background thread
+- **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`: Everything runs on MainActor unless you say otherwise
+- **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`: `nonisolated` async functions stay on the caller's actor instead of jumping to a background thread
 
-Your code runs on MainActor. When you need background work, mark it `@concurrent`. That's it.
+New Xcode 26 projects have both enabled by default. When you need CPU-intensive work off the main thread, use `@concurrent`.
 
 <pre><code class="language-swift">// Runs on MainActor (the default)
 func updateUI() async { }
@@ -367,13 +366,13 @@ The compiler won't verify thread safety. If you're wrong, you'll get data races.
 <div class="tip">
 <h4>Approachable Concurrency: Less Friction</h4>
 
-With [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html), Sendable errors become much rarer. To enable it, set `SWIFT_VERSION` to `6` (or `5` with `-enable-upcoming-feature`) and `SWIFT_APPROACHABLE_CONCURRENCY` to `YES`. New Xcode 26 projects have both enabled by default.
+With [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html), Sendable errors become much rarer:
 
 - If code doesn't cross isolation boundaries, you don't need Sendable
 - Async functions stay on the caller's actor instead of hopping to a background thread
 - The compiler is smarter about detecting when values are used safely
 
-Your code runs on MainActor unless you explicitly opt out. When you do need parallelism, mark functions `@concurrent` and then think about Sendable.
+Enable it by setting `SWIFT_DEFAULT_ACTOR_ISOLATION` to `MainActor` and `SWIFT_APPROACHABLE_CONCURRENCY` to `YES`. New Xcode 26 projects have both enabled by default. When you do need parallelism, mark functions `@concurrent` and then think about Sendable.
 </div>
 
 <div class="analogy">

@@ -275,13 +275,12 @@ let name = account.bankName()  // await 不要
 <div class="tip">
 <h4>親しみやすい並行処理: 摩擦を減らす</h4>
 
-[親しみやすい並行処理](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)はメンタルモデルをシンプルにする。有効にするには、`SWIFT_VERSION` を `6`（または `-enable-upcoming-feature` 付きの `5`）に、`SWIFT_APPROACHABLE_CONCURRENCY` を `YES` に設定する。新しい Xcode 26 プロジェクトではデフォルトで両方が有効になっている。
+[親しみやすい並行処理](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)は2つの Xcode ビルド設定でメンタルモデルをシンプルにする：
 
-- 他に指定しない限りすべてが MainActor で実行される
-- メインスレッドから外れた CPU 集約的な作業が必要なときは `@concurrent` を使う
-- `nonisolated` async 関数はバックグラウンドスレッドにジャンプする代わりに呼び出し元のアクターにとどまる
+- **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`：他に指定しない限りすべてが MainActor で実行される
+- **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`：`nonisolated` async 関数はバックグラウンドスレッドにジャンプする代わりに呼び出し元のアクターにとどまる
 
-コードは MainActor で実行される。バックグラウンド作業が必要なときは `@concurrent` でマークする。それだけだ。
+新しい Xcode 26 プロジェクトではデフォルトで両方が有効になっている。メインスレッドから外れた CPU 集約的な作業が必要なときは `@concurrent` を使う。
 
 <pre><code class="language-swift">// MainActor で実行（デフォルト）
 func updateUI() async { }
@@ -367,13 +366,13 @@ final class ThreadSafeCache: @unchecked Sendable {
 <div class="tip">
 <h4>親しみやすい並行処理: 摩擦を減らす</h4>
 
-[親しみやすい並行処理](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)では、Sendable エラーはずっと少なくなる。有効にするには、`SWIFT_VERSION` を `6`（または `-enable-upcoming-feature` 付きの `5`）に、`SWIFT_APPROACHABLE_CONCURRENCY` を `YES` に設定する。新しい Xcode 26 プロジェクトではデフォルトで両方が有効になっている。
+[親しみやすい並行処理](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)では、Sendable エラーはずっと少なくなる：
 
 - コードが分離境界を越えないなら、Sendable は不要
 - async 関数はバックグラウンドスレッドにホップする代わりに呼び出し元のアクターにとどまる
 - コンパイラは値が安全に使われているかの検出が賢くなる
 
-コードは明示的にオプトアウトしない限り MainActor で実行される。並列性が本当に必要なときは、関数を `@concurrent` でマークしてから Sendable について考えよう。
+`SWIFT_DEFAULT_ACTOR_ISOLATION` を `MainActor` に、`SWIFT_APPROACHABLE_CONCURRENCY` を `YES` に設定して有効にする。新しい Xcode 26 プロジェクトではデフォルトで両方が有効になっている。並列性が本当に必要なときは、関数を `@concurrent` でマークしてから Sendable について考えよう。
 </div>
 
 <div class="analogy">

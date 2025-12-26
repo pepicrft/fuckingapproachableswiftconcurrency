@@ -275,13 +275,12 @@ let name = account.bankName()  // لا حاجة لـ await
 <div class="tip">
 <h4>Approachable Concurrency: احتكاك أقل</h4>
 
-[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) يبسط النموذج الذهني. لتفعيله، عيّن `SWIFT_VERSION` إلى `6` (أو `5` مع `-enable-upcoming-feature`) و`SWIFT_APPROACHABLE_CONCURRENCY` إلى `YES`. مشاريع Xcode 26 الجديدة تفعّل كليهما افتراضياً.
+[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) يبسط النموذج الذهني من خلال إعدادين في Xcode:
 
-- كل شيء يعمل على MainActor إلا إذا قلت غير ذلك
-- عندما تحتاج عملاً مكثفاً على المعالج بعيداً عن الخيط الرئيسي، استخدم `@concurrent`
-- دوال `nonisolated` غير المتزامنة تبقى على actor المستدعي بدلاً من القفز لخيط خلفي
+- **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`: كل شيء يعمل على MainActor إلا إذا قلت غير ذلك
+- **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`: دوال `nonisolated` غير المتزامنة تبقى على actor المستدعي بدلاً من القفز لخيط خلفي
 
-كودك يعمل على MainActor. عندما تحتاج عمل خلفي، ضع علامة `@concurrent`. هذا كل شيء.
+مشاريع Xcode 26 الجديدة تفعّل كليهما افتراضياً. عندما تحتاج عملاً مكثفاً على المعالج بعيداً عن الخيط الرئيسي، استخدم `@concurrent`.
 
 <pre><code class="language-swift">// يعمل على MainActor (الافتراضي)
 func updateUI() async { }
@@ -367,13 +366,13 @@ final class ThreadSafeCache: @unchecked Sendable {
 <div class="tip">
 <h4>Approachable Concurrency: احتكاك أقل</h4>
 
-مع [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)، أخطاء Sendable تصبح أندر بكثير. لتفعيله، عيّن `SWIFT_VERSION` إلى `6` (أو `5` مع `-enable-upcoming-feature`) و`SWIFT_APPROACHABLE_CONCURRENCY` إلى `YES`. مشاريع Xcode 26 الجديدة تفعّل كليهما افتراضياً.
+مع [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)، أخطاء Sendable تصبح أندر بكثير:
 
 - إذا كان الكود لا يعبر حدود العزل، لا تحتاج Sendable
 - الدوال غير المتزامنة تبقى على actor المستدعي بدلاً من القفز لخيط خلفي
 - المترجم أذكى في اكتشاف متى تُستخدم القيم بأمان
 
-كودك يعمل على MainActor إلا إذا خرجت صراحةً. عندما تحتاج التوازي، ضع علامة `@concurrent` على الدوال وعندها فكر في Sendable.
+فعّله بتعيين `SWIFT_DEFAULT_ACTOR_ISOLATION` إلى `MainActor` و`SWIFT_APPROACHABLE_CONCURRENCY` إلى `YES`. مشاريع Xcode 26 الجديدة تفعّل كليهما افتراضياً. عندما تحتاج التوازي، ضع علامة `@concurrent` على الدوال وعندها فكر في Sendable.
 </div>
 
 <div class="analogy">

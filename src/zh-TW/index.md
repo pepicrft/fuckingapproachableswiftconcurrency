@@ -275,13 +275,12 @@ let name = account.bankName()  // 不需要 await
 <div class="tip">
 <h4>易於使用的並發：更少摩擦</h4>
 
-[易於使用的並發](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)簡化了心智模型。要啟用它，把 `SWIFT_VERSION` 設為 `6`（或 `5` 加上 `-enable-upcoming-feature`），並把 `SWIFT_APPROACHABLE_CONCURRENCY` 設為 `YES`。新的 Xcode 26 專案預設兩者都啟用。
+[易於使用的並發](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)透過兩個 Xcode 建置設定簡化了心智模型：
 
-- 除非你另外說明，所有東西都在 MainActor 上執行
-- 當你需要在主執行緒外進行 CPU 密集型工作時，用 `@concurrent`
-- `nonisolated` async 函式留在呼叫者的 actor 上，而不是跳到背景執行緒
+- **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`：除非你另外說明，所有東西都在 MainActor 上執行
+- **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`：`nonisolated` async 函式留在呼叫者的 actor 上，而不是跳到背景執行緒
 
-你的程式碼在 MainActor 上執行。當你需要背景工作時，標記它 `@concurrent`。就這樣。
+新的 Xcode 26 專案預設兩者都啟用。當你需要在主執行緒外進行 CPU 密集型工作時，用 `@concurrent`。
 
 <pre><code class="language-swift">// 在 MainActor 上執行（預設）
 func updateUI() async { }
@@ -367,13 +366,13 @@ final class ThreadSafeCache: @unchecked Sendable {
 <div class="tip">
 <h4>易於使用的並發：更少摩擦</h4>
 
-有了[易於使用的並發](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)，Sendable 錯誤變得少很多。要啟用它，把 `SWIFT_VERSION` 設為 `6`（或 `5` 加上 `-enable-upcoming-feature`），並把 `SWIFT_APPROACHABLE_CONCURRENCY` 設為 `YES`。新的 Xcode 26 專案預設兩者都啟用。
+有了[易於使用的並發](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)，Sendable 錯誤變得少很多：
 
 - 如果程式碼不跨越隔離邊界，你不需要 Sendable
 - Async 函式留在呼叫者的 actor 上，而不是跳到背景執行緒
 - 編譯器更聰明地偵測值何時被安全使用
 
-你的程式碼在 MainActor 上執行，除非你明確選擇退出。當你確實需要並行時，標記函式 `@concurrent` 然後再考慮 Sendable。
+把 `SWIFT_DEFAULT_ACTOR_ISOLATION` 設為 `MainActor` 並把 `SWIFT_APPROACHABLE_CONCURRENCY` 設為 `YES` 來啟用。新的 Xcode 26 專案預設兩者都啟用。當你確實需要並行時，標記函式 `@concurrent` 然後再考慮 Sendable。
 </div>
 
 <div class="analogy">

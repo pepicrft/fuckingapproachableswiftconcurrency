@@ -275,13 +275,12 @@ let name = account.bankName()  // 不需要 await
 <div class="tip">
 <h4>Approachable Concurrency:更少摩擦</h4>
 
-[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) 简化了心智模型。要启用它,将 `SWIFT_VERSION` 设为 `6`(或 `5` 加上 `-enable-upcoming-feature`)并将 `SWIFT_APPROACHABLE_CONCURRENCY` 设为 `YES`。新的 Xcode 26 项目默认都启用了。
+[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) 通过两个 Xcode 构建设置简化了心智模型:
 
-- 除非你另外说明,一切都在 MainActor 上运行
-- 当你需要 CPU 密集型工作离开主线程时,用 `@concurrent`
-- `nonisolated` 异步函数留在调用者的 actor 上,而不是跳到后台线程
+- **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`: 除非你另外说明,一切都在 MainActor 上运行
+- **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`: `nonisolated` 异步函数留在调用者的 actor 上,而不是跳到后台线程
 
-你的代码在 MainActor 上运行。当你需要后台工作时,标记为 `@concurrent`。就这样。
+新的 Xcode 26 项目默认都启用了。当你需要 CPU 密集型工作离开主线程时,用 `@concurrent`。
 
 <pre><code class="language-swift">// 在 MainActor 上运行(默认)
 func updateUI() async { }
@@ -367,13 +366,13 @@ final class ThreadSafeCache: @unchecked Sendable {
 <div class="tip">
 <h4>Approachable Concurrency:更少摩擦</h4>
 
-用 [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html),Sendable 错误会少很多。要启用它,将 `SWIFT_VERSION` 设为 `6`(或 `5` 加上 `-enable-upcoming-feature`)并将 `SWIFT_APPROACHABLE_CONCURRENCY` 设为 `YES`。新的 Xcode 26 项目默认都启用了。
+用 [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html),Sendable 错误会少很多:
 
 - 如果代码不跨隔离边界,你不需要 Sendable
 - 异步函数留在调用者的 actor 上,而不是跳到后台线程
 - 编译器更聪明地检测值何时被安全使用
 
-你的代码在 MainActor 上运行,除非你显式选择退出。当你确实需要并行时,标记函数为 `@concurrent`,然后再考虑 Sendable。
+将 `SWIFT_DEFAULT_ACTOR_ISOLATION` 设为 `MainActor` 并将 `SWIFT_APPROACHABLE_CONCURRENCY` 设为 `YES` 来启用。新的 Xcode 26 项目默认都启用了。当你确实需要并行时,标记函数为 `@concurrent`,然后再考虑 Sendable。
 </div>
 
 <div class="analogy">

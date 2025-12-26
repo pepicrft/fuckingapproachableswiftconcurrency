@@ -275,13 +275,12 @@ let name = account.bankName()  // await 필요 없음
 <div class="tip">
 <h4>접근하기 쉬운 동시성: 더 적은 마찰</h4>
 
-[접근하기 쉬운 동시성](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)은 멘탈 모델을 단순화합니다. 활성화하려면 `SWIFT_VERSION`을 `6`(또는 `-enable-upcoming-feature`와 함께 `5`)으로, `SWIFT_APPROACHABLE_CONCURRENCY`를 `YES`로 설정하세요. 새 Xcode 26 프로젝트는 둘 다 기본으로 활성화되어 있습니다.
+[접근하기 쉬운 동시성](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)은 두 가지 Xcode 빌드 설정으로 멘탈 모델을 단순화합니다:
 
-- 다르게 말하지 않으면 모든 것이 MainActor에서 실행됩니다
-- 메인 스레드에서 벗어난 CPU 집약적 작업이 필요하면 `@concurrent`를 사용하세요
-- `nonisolated` async 함수는 백그라운드 스레드로 점프하는 대신 호출자의 액터에 머뭅니다
+- **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`: 다르게 말하지 않으면 모든 것이 MainActor에서 실행됩니다
+- **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`: `nonisolated` async 함수는 백그라운드 스레드로 점프하는 대신 호출자의 액터에 머뭅니다
 
-코드가 MainActor에서 실행됩니다. 백그라운드 작업이 필요하면 `@concurrent`로 표시하세요. 그게 다입니다.
+새 Xcode 26 프로젝트는 둘 다 기본으로 활성화되어 있습니다. 메인 스레드에서 벗어난 CPU 집약적 작업이 필요하면 `@concurrent`를 사용하세요.
 
 <pre><code class="language-swift">// MainActor에서 실행됨 (기본값)
 func updateUI() async { }
@@ -367,13 +366,13 @@ final class ThreadSafeCache: @unchecked Sendable {
 <div class="tip">
 <h4>접근하기 쉬운 동시성: 더 적은 마찰</h4>
 
-[접근하기 쉬운 동시성](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)을 사용하면, Sendable 에러가 훨씬 드물어집니다. 활성화하려면 `SWIFT_VERSION`을 `6`(또는 `-enable-upcoming-feature`와 함께 `5`)으로, `SWIFT_APPROACHABLE_CONCURRENCY`를 `YES`로 설정하세요. 새 Xcode 26 프로젝트는 둘 다 기본으로 활성화되어 있습니다.
+[접근하기 쉬운 동시성](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)을 사용하면, Sendable 에러가 훨씬 드물어집니다:
 
 - 코드가 격리 경계를 넘지 않으면, Sendable이 필요 없습니다
 - Async 함수가 백그라운드 스레드로 호핑하는 대신 호출자의 액터에 머뭅니다
 - 컴파일러가 값이 안전하게 사용되는지 감지하는 데 더 똑똑해집니다
 
-명시적으로 옵트 아웃하지 않으면 코드가 MainActor에서 실행됩니다. 병렬성이 필요할 때 함수를 `@concurrent`로 표시하고 그 다음에 Sendable을 생각하세요.
+`SWIFT_DEFAULT_ACTOR_ISOLATION`을 `MainActor`로, `SWIFT_APPROACHABLE_CONCURRENCY`를 `YES`로 설정해서 활성화하세요. 새 Xcode 26 프로젝트는 둘 다 기본으로 활성화되어 있습니다. 병렬성이 필요할 때 함수를 `@concurrent`로 표시하고 그 다음에 Sendable을 생각하세요.
 </div>
 
 <div class="analogy">
