@@ -633,24 +633,24 @@ If you're already in an async context, prefer structured concurrency (`async let
 
 ### Create unmanaged tasks
 
-Tasks that you create manually with `Task { ... }` or `Task.detached { ... }` are not managed. After you created unmanaged tasks, you can't control them. You can't cancell them if the task from which you started it is cancelled. You can't know if they finished their work, if they throw an error or to collect their return value. Starting such a task is like throwing a bottle at the sea and hope it will deliver its message to its destination, without ever seeing that bottle anymore.
+Tasks that you create manually with `Task { ... }` or `Task.detached { ... }` are not managed. After you create unmanaged tasks, you can't control them. You can't cancel them if the task from which you started it is cancelled. You can't know if they finished their work, if they throw an error, or collect their return value. Starting such a task is like throwing a bottle into the sea and hoping it will deliver its message to its destination, without ever seeing that bottle again.
 
 <div class="analogy">
 <h4>The Office Building</h4>
 
 A `Task` is like assigning work to an employee. The employee handles the request (including waiting for other offices) while you continue with your immediate work.
 
-After you dispatched work to the employee, you have no means to communicate with her. You can't tell to stop the work or to know if she finished and what was the result of that work.
+After you dispatch work to the employee, you have no means to communicate with her. You can't tell her to stop the work or know if she finished and what the result of that work was.
 
-What you actually want is to give the employee a talkie-walkie to communicate with her while she handles the request. With the talkie-walkie, you can tell her to stop or she can tell you when she encounters an error or she can report the result of the request you gave her.
+What you actually want is to give the employee a walkie-talkie to communicate with her while she handles the request. With the walkie-talkie, you can tell her to stop, or she can tell you when she encounters an error, or she can report the result of the request you gave her.
 </div>
 
-Instead of creating unmanaged tasks, use Swift concurrency to keep control the sub tasks you create. Use `TaskGroup` to manage a (group of) subtask(s). Swift provides a couple of `withTaskGroup() { group in ... }` functions to help creating a task group.
+Instead of creating unmanaged tasks, use Swift concurrency to keep control of the subtasks you create. Use `TaskGroup` to manage a (group of) subtask(s). Swift provides a couple of `withTaskGroup() { group in ... }` functions to help create a task group.
 
 ```swift
 func doWork() async {
 
-    // this will return when all sub tasks will return, throw an error, or be cancelled
+    // this will return when all subtasks return, throw an error, or are cancelled
     let result = try await withThrowingTaskGroup() { group in 
         group.addTask {
             try await self.performAsyncOperation1()  
@@ -698,13 +698,13 @@ You can learn more about [TaskGroup](https://developer.apple.com/documentation/s
 
 #### Note about Tasks and SwiftUI.
 
-When writing a UI, you often want to start an asynchronous tasks from a synchronous context. For example, you want to asynchronoulsy load an image as a response to a UI element touch. Starting asynchronous tasks from a synchronous context is not possible in Swift. This is why you see solutions involving `Task { ... }`, which introduces unmanaged tasks.
+When writing a UI, you often want to start asynchronous tasks from a synchronous context. For example, you want to asynchronously load an image as a response to a UI element touch. Starting asynchronous tasks from a synchronous context is not possible in Swift. This is why you see solutions involving `Task { ... }`, which introduces unmanaged tasks.
 
 You can't use `TaskGroup` from a synchronous SwiftUI modifier because `withTaskGroup()` is an async function too and so are its related functions.
 
-As an alternative, SwiftUI offers an asynchronous modifier that you can use to start asynchronous operations. The `.task { }` modifier, that we already mentioned, accepts a `() async -> Void` function, ideal to call other `async` functions. It is available on every `View`. It is triggered before the view appears and the tasks it creates are managed and bound to the lifecycle of the view, meaning the tasks are cancelled when the view disappears.
+As an alternative, SwiftUI offers an asynchronous modifier that you can use to start asynchronous operations. The `.task { }` modifier, which we already mentioned, accepts a `() async -> Void` function, ideal for calling other `async` functions. It is available on every `View`. It is triggered before the view appears and the tasks it creates are managed and bound to the lifecycle of the view, meaning the tasks are cancelled when the view disappears.
 
-Back to the tap to load an image example, instead invoking an asynchronous `loadImage()` function from a synchronous `.onTap() { ... }` function, you can create a asynchronous stream of events that will be handled by `async` functions.
+Back to the tap-to-load-an-image example: instead of invoking an asynchronous `loadImage()` function from a synchronous `.onTap() { ... }` function, you can create an asynchronous stream of events that will be handled by `async` functions.
 
 Here is a simple example:
 
@@ -729,7 +729,7 @@ struct ContentView: View {
             // produce an event
             self.continuation?.yield(.buttonClicked)
         }
-        // the View manages the sub Task
+        // the View manages the subtask
         // it starts before the view is displayed 
         // and stops when the view is hidden
         .task {
