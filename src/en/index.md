@@ -467,10 +467,12 @@ class ViewModel {
 ```
 
 <div class="warning">
-<h4>Task.detached is usually wrong</h4>
+<h4>Task and Task.detached are an anti-pattern</h4>
 
-The Swift team recommends [Task.detached as a last resort](https://forums.swift.org/t/revisiting-when-to-use-task-detached/57929). It doesn't inherit priority, task-local values, or actor context. Most of the time, regular `Task` is what you want. If you need CPU-intensive work off the main actor, mark the function `@concurrent` instead.
-</div>
+The tasks you schedule with `Task { ... }` are not managed. There is no way for you to cancel them or to know when they finish, if ever. There is no way to access their return value or to know if they encounter an error. In the majority of the cases, it will be better to use tasks managed by a `.task` or `TaskGroup`, [as explained in the "Common mistakes" section](#managedtasks).
+
+[Task.detached should be your last resort](https://forums.swift.org/t/revisiting-when-to-use-task-detached/57929). Detached tasks don't inherit priority, task-local values, or actor context. If you need CPU-intensive work off the main actor, mark the function `@concurrent` instead.
+ </div>
 
 <div class="analogy">
 <h4>Walking Through the Building</h4>
@@ -626,6 +628,134 @@ func fetchAll() async {
 ```
 
 If you're already in an async context, prefer structured concurrency (`async let`, `TaskGroup`) over creating unstructured `Task`s. Structured concurrency handles cancellation automatically and makes the code easier to reason about.
+
+<div id="managedtasks">
+
+### Create unmanaged tasks
+
+Tasks that you create manually with `Task { ... }` or `Task.detached { ... }` are not managed. After you created unmanaged tasks, you can't control them. You can't cancell them if the task from which you started it is cancelled. You can't know if they finished their work, if they throw an error or to collect their return value. Starting such a task is like throwing a bottle at the sea and hope it will deliver its message to its destination, without ever seeing that bottle anymore.
+
+<div class="analogy">
+<h4>The Office Building</h4>
+
+A `Task` is like assigning work to an employee. The employee handles the request (including waiting for other offices) while you continue with your immediate work.
+
+After you dispatched work to the employee, you have no means to communicate with her. You can't tell to stop the work or to know if she finished and what was the result of that work.
+
+What you actually want is to give the employee a talkie-walkie to communicate with her while she handles the request. With the talkie-walkie, you can tell her to stop or she can tell you when she encounters an error or she can report the result of the request you gave her.
+</div>
+
+Instead of creating unmanaged tasks, use Swift concurrency to keep control the sub tasks you create. Use `TaskGroup` to manage a (group of) subtask(s). Swift provides a couple of `withTaskGroup() { group in ... }` functions to help creating a task group.
+
+```swift
+func doWork() async {
+
+    // this will return when all sub tasks will return, throw an error, or be cancelled
+    let result = try await withThrowingTaskGroup() { group in 
+        group.addTask {
+            try await self.performAsyncOperation1()  
+        }
+        group.addTask {
+            try await self.performAsyncOperation2()  
+        }
+        // wait for and collect the results of the tasks here 
+    }
+}
+
+func performAsyncOperation1() async throws -> Int {
+    return 1
+}
+func performAsyncOperation2() async throws -> Int {
+    return 2
+}
+```
+
+To collect the results of the group's child tasks, you can use a for-await-in loop:
+
+```swift
+var sum = 0
+for await result in group {
+    sum += result
+}
+// sum == 3 
+```
+
+If you need more control or only a few results, you can call next() directly:
+
+```swift
+guard let first = await group.next() else {
+    group.cancelAll()
+    return 0
+}
+// first == 1 or first == 2
+let second = await group.next() ?? 0
+group.cancelAll()
+// second == 2 or second == 1
+return first + second
+```
+
+You can learn more about [TaskGroup](https://developer.apple.com/documentation/swift/taskgroup) in the Swift documentation.
+
+#### Note about Tasks and SwiftUI.
+
+When writing a UI, you often want to start an asynchronous tasks from a synchronous context. For example, you want to asynchronoulsy load an image as a response to a UI element touch. Starting asynchronous tasks from a synchronous context is not possible in Swift. This is why you see solutions involving `Task { ... }`, which introduces unmanaged tasks.
+
+You can't use `TaskGroup` from a synchronous SwiftUI modifier because `withTaskGroup()` is an async function too and so are its related functions.
+
+As an alternative, SwiftUI offers an asynchronous modifier that you can use to start asynchronous operations. The `.task { }` modifier, that we already mentioned, accepts a `() async -> Void` function, ideal to call other `async` functions. It is available on every `View`. It is triggered before the view appears and the tasks it creates are managed and bound to the lifecycle of the view, meaning the tasks are cancelled when the view disappears.
+
+Back to the tap to load an image example, instead invoking an asynchronous `loadImage()` function from a synchronous `.onTap() { ... }` function, you can create a asynchronous stream of events that will be handled by `async` functions.
+
+Here is a simple example:
+
+```swift
+struct ContentView: View {
+    
+    // the list of events the UI can generate
+    enum Event {
+        case buttonClicked
+    }
+    
+    var stream: AsyncStream<Event>? = nil
+    var continuation: AsyncStream<Event>.Continuation? = nil
+    
+    init() {
+        self.stream = AsyncStream { continuation in
+            self.continuation = continuation
+        }
+    }
+    var body: some View {
+        Button("Click Me !") {
+            // produce an event
+            self.continuation?.yield(.buttonClicked)
+        }
+        // the View manages the sub Task
+        // it starts before the view is displayed 
+        // and stops when the view is hidden
+        .task {
+            // we are in an async context, we can call an async function
+            await processEventStream()
+        }
+    }
+    
+    // This is an async function
+    func processEventStream() async throws {
+        guard let stream = self.stream else { return }
+
+        // consume UI events
+        for try await event in stream {
+            
+            switch event {
+            // asynchronously load the image when the button is clicked  
+            case .buttonClicked:
+              try await loadImage()
+            }
+        }
+    }
+}
+```
+
+</div>
 
   </div>
 </section>
