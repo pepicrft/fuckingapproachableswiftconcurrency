@@ -208,7 +208,7 @@ DispatchQueue.global().async { count += 1 }
 
 نموذج التزامن في Swift يسأل سؤالاً مختلفاً. بدلاً من "على أي خيط يجب أن يعمل هذا؟"، يسأل: **"من المسموح له بالوصول لهذه البيانات؟"**
 
-هذا هو [العزل](https://developer.apple.com/documentation/swift/isolation). بدلاً من إرسال العمل يدوياً للخيوط، تعلن حدوداً حول البيانات. المترجم يفرض هذه الحدود في وقت البناء، ليس وقت التشغيل.
+هذا هو [العزل](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Isolation). بدلاً من إرسال العمل يدوياً للخيوط، تعلن حدوداً حول البيانات. المترجم يفرض هذه الحدود في وقت البناء، ليس وقت التشغيل.
 
 <div class="tip">
 <h4>خلف الكواليس</h4>

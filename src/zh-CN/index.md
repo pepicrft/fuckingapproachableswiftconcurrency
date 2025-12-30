@@ -208,7 +208,7 @@ DispatchQueue.global().async { count += 1 }
 
 Swift 的并发模型问的是不同的问题。不是"这应该在哪个线程运行?",而是:**"谁被允许访问这个数据?"**
 
-这就是[隔离](https://developer.apple.com/documentation/swift/isolation)。你不是手动把工作派发到线程,而是声明数据周围的边界。编译器在构建时强制执行这些边界,而不是运行时。
+这就是[隔离](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Isolation)。你不是手动把工作派发到线程,而是声明数据周围的边界。编译器在构建时强制执行这些边界,而不是运行时。
 
 <div class="tip">
 <h4>底层原理</h4>

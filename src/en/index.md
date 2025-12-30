@@ -208,7 +208,7 @@ The more concurrent your app is, the more likely data races become. A simple iOS
 
 Swift's concurrency model asks a different question. Instead of "which thread should this run on?", it asks: **"who is allowed to access this data?"**
 
-This is [isolation](https://developer.apple.com/documentation/swift/isolation). Rather than manually dispatching work to threads, you declare boundaries around data. The compiler enforces these boundaries at build time, not runtime.
+This is [isolation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Isolation). Rather than manually dispatching work to threads, you declare boundaries around data. The compiler enforces these boundaries at build time, not runtime.
 
 <div class="tip">
 <h4>Under the hood</h4>

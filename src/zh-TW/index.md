@@ -208,7 +208,7 @@ DispatchQueue.global().async { count += 1 }
 
 Swift 的並發模型問一個不同的問題。不是問「這應該在哪個執行緒上執行？」，它問：**「誰被允許存取這個資料？」**
 
-這就是[隔離](https://developer.apple.com/documentation/swift/isolation)。不是手動把工作派遣到執行緒，你宣告資料周圍的邊界。編譯器在建置時強制執行這些邊界，而不是執行時期。
+這就是[隔離](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Isolation)。不是手動把工作派遣到執行緒，你宣告資料周圍的邊界。編譯器在建置時強制執行這些邊界，而不是執行時期。
 
 <div class="tip">
 <h4>底層原理</h4>

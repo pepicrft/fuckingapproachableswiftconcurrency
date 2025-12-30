@@ -208,7 +208,7 @@ DispatchQueue.global().async { count += 1 }
 
 Swift의 동시성 모델은 다른 질문을 합니다. "이게 어느 스레드에서 실행되어야 하나?" 대신, **"누가 이 데이터에 접근할 수 있나?"**를 묻습니다.
 
-이것이 [격리(isolation)](https://developer.apple.com/documentation/swift/isolation)입니다. 수동으로 스레드에 작업을 디스패치하는 대신, 데이터 주변에 경계를 선언합니다. 컴파일러가 런타임이 아니라 빌드 타임에 이 경계를 강제합니다.
+이것이 [격리(isolation)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Isolation)입니다. 수동으로 스레드에 작업을 디스패치하는 대신, 데이터 주변에 경계를 선언합니다. 컴파일러가 런타임이 아니라 빌드 타임에 이 경계를 강제합니다.
 
 <div class="tip">
 <h4>내부 구조</h4>

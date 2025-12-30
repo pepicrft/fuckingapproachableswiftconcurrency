@@ -208,7 +208,7 @@ DispatchQueue.global().async { count += 1 }
 
 Swift の並行処理モデルは異なる質問をする。「どのスレッドで実行すべきか？」ではなく、**「誰がこのデータにアクセスすることを許可されているか？」**と尋ねる。
 
-これが[分離](https://developer.apple.com/documentation/swift/isolation)だ。手動で作業をスレッドにディスパッチする代わりに、データの周りに境界を宣言する。コンパイラがこれらの境界をランタイムではなくビルド時に強制する。
+これが[分離](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Isolation)だ。手動で作業をスレッドにディスパッチする代わりに、データの周りに境界を宣言する。コンパイラがこれらの境界をランタイムではなくビルド時に強制する。
 
 <div class="tip">
 <h4>内部の仕組み</h4>

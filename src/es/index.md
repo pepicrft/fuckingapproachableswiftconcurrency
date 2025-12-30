@@ -208,7 +208,7 @@ Cuanto más concurrente es tu app, más probables se vuelven los data races. Una
 
 El modelo de concurrencia de Swift hace una pregunta diferente. En lugar de "¿en qué hilo debería ejecutarse esto?", pregunta: **"¿quién tiene permiso para acceder a estos datos?"**
 
-Esto es [aislamiento](https://developer.apple.com/documentation/swift/isolation). En lugar de despachar trabajo manualmente a hilos, declaras límites alrededor de los datos. El compilador hace cumplir estos límites en tiempo de compilación, no en runtime.
+Esto es [aislamiento](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Isolation). En lugar de despachar trabajo manualmente a hilos, declaras límites alrededor de los datos. El compilador hace cumplir estos límites en tiempo de compilación, no en runtime.
 
 <div class="tip">
 <h4>Bajo el capó</h4>

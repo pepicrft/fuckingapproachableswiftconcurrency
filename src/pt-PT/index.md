@@ -208,7 +208,7 @@ Quanto mais concorrente a tua app é, mais prováveis se tornam os data races. U
 
 O modelo de concorrência do Swift faz uma pergunta diferente. Em vez de "em que thread é que isto deve correr?", pergunta: **"quem é que tem permissão para aceder a estes dados?"**
 
-Isto é [isolamento](https://developer.apple.com/documentation/swift/isolation). Em vez de fazer dispatch manual de trabalho para threads, declaras fronteiras à volta de dados. O compilador aplica estas fronteiras em tempo de build, não em runtime.
+Isto é [isolamento](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Isolation). Em vez de fazer dispatch manual de trabalho para threads, declaras fronteiras à volta de dados. O compilador aplica estas fronteiras em tempo de build, não em runtime.
 
 <div class="tip">
 <h4>Por baixo do capô</h4>
