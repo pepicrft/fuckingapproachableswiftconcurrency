@@ -275,7 +275,7 @@ let name = account.bankName()  // await не нужен
 <div class="tip">
 <h4>Approachable Concurrency: меньше трения</h4>
 
-[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) упрощает ментальную модель с помощью двух настроек сборки Xcode:
+[Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) упрощает ментальную модель с помощью двух настроек сборки Xcode:
 
 - **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`: Всё выполняется на MainActor, если вы не скажете иначе
 - **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`: `nonisolated` async функции остаются на акторе вызывающего вместо прыжка на фоновый поток
@@ -366,7 +366,7 @@ final class ThreadSafeCache: @unchecked Sendable {
 <div class="tip">
 <h4>Approachable Concurrency: меньше трения</h4>
 
-С [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) ошибки Sendable становятся намного реже:
+С [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) ошибки Sendable становятся намного реже:
 
 - Если код не пересекает границы изоляции, вам не нужен Sendable
 - Async функции остаются на акторе вызывающего вместо прыжка на фоновый поток
@@ -396,7 +396,7 @@ final class ThreadSafeCache: @unchecked Sendable {
 
 Вы видели, что домены изоляции защищают данные, а Sendable контролирует, что пересекает границы между ними. Но как код вообще оказывается в домене изоляции?
 
-Когда вы вызываете функцию или создаёте замыкание, изоляция течёт через ваш код. С [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) ваше приложение стартует на [`MainActor`](https://developer.apple.com/documentation/swift/mainactor), и эта изоляция распространяется на код, который вы вызываете, если только что-то явно её не меняет. Понимание этого потока помогает предсказать, где выполняется код и почему компилятор иногда жалуется.
+Когда вы вызываете функцию или создаёте замыкание, изоляция течёт через ваш код. С [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) ваше приложение стартует на [`MainActor`](https://developer.apple.com/documentation/swift/mainactor), и эта изоляция распространяется на код, который вы вызываете, если только что-то явно её не меняет. Понимание этого потока помогает предсказать, где выполняется код и почему компилятор иногда жалуется.
 
 ### Вызовы функций
 
@@ -408,7 +408,7 @@ func helper() { }                    // Наследует изоляцию вы
 @concurrent func crunch() async { }  // Явно выполняется вне актора
 ```
 
-С [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) большая часть вашего кода наследует изоляцию `MainActor`. Функция выполняется там, где выполняется вызывающий, если она явно не отказывается.
+С [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) большая часть вашего кода наследует изоляцию `MainActor`. Функция выполняется там, где выполняется вызывающий, если она явно не отказывается.
 
 ### Замыкания
 
@@ -492,7 +492,7 @@ class ViewModel {
 
 Swift Concurrency может ощущаться как куча концепций: `async/await`, `Task`, акторы, `MainActor`, `Sendable`, домены изоляции. Но на самом деле в центре всего одна идея: **изоляция наследуется по умолчанию**.
 
-С включённым [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) ваше приложение стартует на [`MainActor`](https://developer.apple.com/documentation/swift/mainactor). Это ваша отправная точка. Оттуда:
+С включённым [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) ваше приложение стартует на [`MainActor`](https://developer.apple.com/documentation/swift/mainactor). Это ваша отправная точка. Оттуда:
 
 - Каждая функция, которую вы вызываете, **наследует** эту изоляцию
 - Каждое замыкание, которое вы создаёте, **захватывает** эту изоляцию

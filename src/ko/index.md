@@ -275,7 +275,7 @@ let name = account.bankName()  // await 필요 없음
 <div class="tip">
 <h4>접근하기 쉬운 동시성: 더 적은 마찰</h4>
 
-[접근하기 쉬운 동시성](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)은 두 가지 Xcode 빌드 설정으로 멘탈 모델을 단순화합니다:
+[접근하기 쉬운 동시성](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)은 두 가지 Xcode 빌드 설정으로 멘탈 모델을 단순화합니다:
 
 - **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`: 다르게 말하지 않으면 모든 것이 MainActor에서 실행됩니다
 - **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`: `nonisolated` async 함수는 백그라운드 스레드로 점프하는 대신 호출자의 액터에 머뭅니다
@@ -366,7 +366,7 @@ final class ThreadSafeCache: @unchecked Sendable {
 <div class="tip">
 <h4>접근하기 쉬운 동시성: 더 적은 마찰</h4>
 
-[접근하기 쉬운 동시성](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)을 사용하면, Sendable 에러가 훨씬 드물어집니다:
+[접근하기 쉬운 동시성](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)을 사용하면, Sendable 에러가 훨씬 드물어집니다:
 
 - 코드가 격리 경계를 넘지 않으면, Sendable이 필요 없습니다
 - Async 함수가 백그라운드 스레드로 호핑하는 대신 호출자의 액터에 머뭅니다
@@ -396,7 +396,7 @@ final class ThreadSafeCache: @unchecked Sendable {
 
 격리 도메인이 데이터를 보호하고, Sendable이 그들 사이를 넘나드는 것을 제어하는 걸 보셨습니다. 하지만 코드가 처음에 어떻게 격리 도메인에 들어가게 되나요?
 
-함수를 호출하거나 클로저를 생성할 때, 격리가 코드를 통해 흐릅니다. [접근하기 쉬운 동시성](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)에서 앱은 [`MainActor`](https://developer.apple.com/documentation/swift/mainactor)에서 시작하고, 무언가가 명시적으로 변경하지 않는 한 그 격리가 호출하는 코드로 전파됩니다. 이 흐름을 이해하면 코드가 어디서 실행되는지, 왜 컴파일러가 가끔 불평하는지 예측하는 데 도움이 됩니다.
+함수를 호출하거나 클로저를 생성할 때, 격리가 코드를 통해 흐릅니다. [접근하기 쉬운 동시성](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)에서 앱은 [`MainActor`](https://developer.apple.com/documentation/swift/mainactor)에서 시작하고, 무언가가 명시적으로 변경하지 않는 한 그 격리가 호출하는 코드로 전파됩니다. 이 흐름을 이해하면 코드가 어디서 실행되는지, 왜 컴파일러가 가끔 불평하는지 예측하는 데 도움이 됩니다.
 
 ### 함수 호출
 
@@ -408,7 +408,7 @@ func helper() { }                    // 호출자의 격리 상속
 @concurrent func crunch() async { }  // 명시적으로 액터 외부에서 실행
 ```
 
-[접근하기 쉬운 동시성](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)에서 대부분의 코드는 `MainActor` 격리를 상속합니다. 명시적으로 옵트 아웃하지 않으면 함수는 호출자가 실행되는 곳에서 실행됩니다.
+[접근하기 쉬운 동시성](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)에서 대부분의 코드는 `MainActor` 격리를 상속합니다. 명시적으로 옵트 아웃하지 않으면 함수는 호출자가 실행되는 곳에서 실행됩니다.
 
 ### 클로저
 
@@ -492,7 +492,7 @@ Swift 팀은 [Task.detached를 최후의 수단으로 권장합니다](https://f
 
 Swift 동시성은 많은 개념처럼 느껴질 수 있습니다: `async/await`, `Task`, 액터, `MainActor`, `Sendable`, 격리 도메인. 하지만 정말 그 중심에는 하나의 아이디어만 있습니다: **격리는 기본적으로 상속됩니다**.
 
-[접근하기 쉬운 동시성](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)이 활성화되면, 앱은 [`MainActor`](https://developer.apple.com/documentation/swift/mainactor)에서 시작합니다. 그게 시작점입니다. 거기서부터:
+[접근하기 쉬운 동시성](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)이 활성화되면, 앱은 [`MainActor`](https://developer.apple.com/documentation/swift/mainactor)에서 시작합니다. 그게 시작점입니다. 거기서부터:
 
 - 호출하는 모든 함수가 그 격리를 **상속**합니다
 - 생성하는 모든 클로저가 그 격리를 **캡처**합니다

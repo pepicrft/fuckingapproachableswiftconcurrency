@@ -275,7 +275,7 @@ let name = account.bankName()  // No await needed
 <div class="tip">
 <h4>Approachable Concurrency: Less Friction</h4>
 
-[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) simplifies the mental model with two Xcode build settings:
+[Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) simplifies the mental model with two Xcode build settings:
 
 - **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`: Everything runs on MainActor unless you say otherwise
 - **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`: `nonisolated` async functions stay on the caller's actor instead of jumping to a background thread
@@ -366,7 +366,7 @@ The compiler won't verify thread safety. If you're wrong, you'll get data races.
 <div class="tip">
 <h4>Approachable Concurrency: Less Friction</h4>
 
-With [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html), Sendable errors become much rarer:
+With [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency), Sendable errors become much rarer:
 
 - If code doesn't cross isolation boundaries, you don't need Sendable
 - Async functions stay on the caller's actor instead of hopping to a background thread
@@ -396,7 +396,7 @@ Back to the office building. When you need to share information between departme
 
 You've seen that isolation domains protect data, and Sendable controls what crosses between them. But how does code end up in an isolation domain in the first place?
 
-When you call a function or create a closure, isolation flows through your code. With [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html), your app starts on [`MainActor`](https://developer.apple.com/documentation/swift/mainactor), and that isolation propagates to the code you call, unless something explicitly changes it. Understanding this flow helps you predict where code runs and why the compiler sometimes complains.
+When you call a function or create a closure, isolation flows through your code. With [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency), your app starts on [`MainActor`](https://developer.apple.com/documentation/swift/mainactor), and that isolation propagates to the code you call, unless something explicitly changes it. Understanding this flow helps you predict where code runs and why the compiler sometimes complains.
 
 ### Function Calls
 
@@ -408,7 +408,7 @@ func helper() { }                    // Inherits caller's isolation
 @concurrent func crunch() async { }  // Explicitly runs off-actor
 ```
 
-With [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html), most of your code inherits `MainActor` isolation. The function runs where the caller runs, unless it explicitly opts out.
+With [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency), most of your code inherits `MainActor` isolation. The function runs where the caller runs, unless it explicitly opts out.
 
 ### Closures
 
@@ -492,7 +492,7 @@ Let's step back and see how all the pieces fit.
 
 Swift Concurrency can feel like a lot of concepts: `async/await`, `Task`, actors, `MainActor`, `Sendable`, isolation domains. But there's really just one idea at the center of it all: **isolation is inherited by default**.
 
-With [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) enabled, your app starts on [`MainActor`](https://developer.apple.com/documentation/swift/mainactor). That's your starting point. From there:
+With [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) enabled, your app starts on [`MainActor`](https://developer.apple.com/documentation/swift/mainactor). That's your starting point. From there:
 
 - Every function you call **inherits** that isolation
 - Every closure you create **captures** that isolation

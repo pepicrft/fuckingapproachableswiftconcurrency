@@ -275,7 +275,7 @@ let name = account.bankName()  // لا حاجة لـ await
 <div class="tip">
 <h4>Approachable Concurrency: احتكاك أقل</h4>
 
-[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) يبسط النموذج الذهني من خلال إعدادين في Xcode:
+[Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) يبسط النموذج الذهني من خلال إعدادين في Xcode:
 
 - **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`: كل شيء يعمل على MainActor إلا إذا قلت غير ذلك
 - **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`: دوال `nonisolated` غير المتزامنة تبقى على actor المستدعي بدلاً من القفز لخيط خلفي
@@ -366,7 +366,7 @@ final class ThreadSafeCache: @unchecked Sendable {
 <div class="tip">
 <h4>Approachable Concurrency: احتكاك أقل</h4>
 
-مع [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)، أخطاء Sendable تصبح أندر بكثير:
+مع [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)، أخطاء Sendable تصبح أندر بكثير:
 
 - إذا كان الكود لا يعبر حدود العزل، لا تحتاج Sendable
 - الدوال غير المتزامنة تبقى على actor المستدعي بدلاً من القفز لخيط خلفي
@@ -396,7 +396,7 @@ final class ThreadSafeCache: @unchecked Sendable {
 
 رأيت أن نطاقات العزل تحمي البيانات، وSendable يتحكم فيما يعبر بينها. لكن كيف ينتهي الكود في نطاق عزل في الأصل؟
 
-عندما تستدعي دالة أو تنشئ closure، العزل يتدفق عبر كودك. مع [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)، تطبيقك يبدأ على [`MainActor`](https://developer.apple.com/documentation/swift/mainactor)، وذلك العزل ينتشر للكود الذي تستدعيه، إلا إذا غيّره شيء صراحةً. فهم هذا التدفق يساعدك على التنبؤ أين يعمل الكود ولماذا المترجم أحياناً يشتكي.
+عندما تستدعي دالة أو تنشئ closure، العزل يتدفق عبر كودك. مع [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)، تطبيقك يبدأ على [`MainActor`](https://developer.apple.com/documentation/swift/mainactor)، وذلك العزل ينتشر للكود الذي تستدعيه، إلا إذا غيّره شيء صراحةً. فهم هذا التدفق يساعدك على التنبؤ أين يعمل الكود ولماذا المترجم أحياناً يشتكي.
 
 ### استدعاءات الدوال
 
@@ -408,7 +408,7 @@ func helper() { }                    // ترث عزل المستدعي
 @concurrent func crunch() async { }  // صراحةً تعمل بعيداً عن الـ actor
 ```
 
-مع [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)، معظم كودك يرث عزل `MainActor`. الدالة تعمل حيث يعمل المستدعي، إلا إذا خرجت صراحةً.
+مع [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)، معظم كودك يرث عزل `MainActor`. الدالة تعمل حيث يعمل المستدعي، إلا إذا خرجت صراحةً.
 
 ### الـ Closures
 
@@ -492,7 +492,7 @@ class ViewModel {
 
 التزامن في Swift قد يشعر بالكثير من المفاهيم: `async/await`، `Task`، الـ actors، `MainActor`، `Sendable`، نطاقات العزل. لكن هناك فكرة واحدة فقط في المركز: **العزل يُورَث افتراضياً**.
 
-مع [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) مفعّل، تطبيقك يبدأ على [`MainActor`](https://developer.apple.com/documentation/swift/mainactor). هذه نقطة بدايتك. من هناك:
+مع [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) مفعّل، تطبيقك يبدأ على [`MainActor`](https://developer.apple.com/documentation/swift/mainactor). هذه نقطة بدايتك. من هناك:
 
 - كل دالة تستدعيها **ترث** ذلك العزل
 - كل closure تنشئها **تلتقط** ذلك العزل

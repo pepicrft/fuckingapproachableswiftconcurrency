@@ -275,7 +275,7 @@ let name = account.bankName()  // 不需要 await
 <div class="tip">
 <h4>易於使用的並發：更少摩擦</h4>
 
-[易於使用的並發](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)透過兩個 Xcode 建置設定簡化了心智模型：
+[易於使用的並發](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)透過兩個 Xcode 建置設定簡化了心智模型：
 
 - **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`：除非你另外說明，所有東西都在 MainActor 上執行
 - **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`：`nonisolated` async 函式留在呼叫者的 actor 上，而不是跳到背景執行緒
@@ -366,7 +366,7 @@ final class ThreadSafeCache: @unchecked Sendable {
 <div class="tip">
 <h4>易於使用的並發：更少摩擦</h4>
 
-有了[易於使用的並發](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)，Sendable 錯誤變得少很多：
+有了[易於使用的並發](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)，Sendable 錯誤變得少很多：
 
 - 如果程式碼不跨越隔離邊界，你不需要 Sendable
 - Async 函式留在呼叫者的 actor 上，而不是跳到背景執行緒
@@ -396,7 +396,7 @@ final class ThreadSafeCache: @unchecked Sendable {
 
 你已經看到隔離域保護資料，而 Sendable 控制什麼可以在它們之間跨越。但程式碼一開始是怎麼進入一個隔離域的？
 
-當你呼叫一個函式或建立一個閉包時，隔離會流過你的程式碼。有了[易於使用的並發](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)，你的 app 從 [`MainActor`](https://developer.apple.com/documentation/swift/mainactor) 開始，那個隔離會傳播到你呼叫的程式碼，除非有東西明確改變它。理解這個流動幫助你預測程式碼在哪裡執行，以及為什麼編譯器有時會抱怨。
+當你呼叫一個函式或建立一個閉包時，隔離會流過你的程式碼。有了[易於使用的並發](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)，你的 app 從 [`MainActor`](https://developer.apple.com/documentation/swift/mainactor) 開始，那個隔離會傳播到你呼叫的程式碼，除非有東西明確改變它。理解這個流動幫助你預測程式碼在哪裡執行，以及為什麼編譯器有時會抱怨。
 
 ### 函式呼叫
 
@@ -408,7 +408,7 @@ func helper() { }                    // 繼承呼叫者的隔離
 @concurrent func crunch() async { }  // 明確在 actor 外執行
 ```
 
-有了[易於使用的並發](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)，你大部分的程式碼繼承 `MainActor` 隔離。函式在呼叫者執行的地方執行，除非它明確選擇退出。
+有了[易於使用的並發](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)，你大部分的程式碼繼承 `MainActor` 隔離。函式在呼叫者執行的地方執行，除非它明確選擇退出。
 
 ### 閉包
 
@@ -492,7 +492,7 @@ Swift 團隊建議 [Task.detached 作為最後手段](https://forums.swift.org/t
 
 Swift 並發可能感覺像很多概念：`async/await`、`Task`、actors、`MainActor`、`Sendable`、隔離域。但其實只有一個核心想法：**隔離預設是繼承的**。
 
-有了[易於使用的並發](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)啟用，你的 app 從 [`MainActor`](https://developer.apple.com/documentation/swift/mainactor) 開始。這是你的起點。從那裡：
+有了[易於使用的並發](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)啟用，你的 app 從 [`MainActor`](https://developer.apple.com/documentation/swift/mainactor) 開始。這是你的起點。從那裡：
 
 - 你呼叫的每個函式**繼承**那個隔離
 - 你建立的每個閉包**捕獲**那個隔離

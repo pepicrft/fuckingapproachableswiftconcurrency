@@ -275,7 +275,7 @@ let name = account.bankName()  // Não precisa de await
 <div class="tip">
 <h4>Approachable Concurrency: Menos Fricção</h4>
 
-[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) simplifica o modelo mental com duas configurações do Xcode:
+[Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) simplifica o modelo mental com duas configurações do Xcode:
 
 - **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`: Tudo roda no MainActor a menos que você diga o contrário
 - **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`: Funções async `nonisolated` ficam no actor do chamador em vez de pular para uma thread de segundo plano
@@ -366,7 +366,7 @@ O compilador não vai verificar thread safety. Se você estiver errado, você te
 <div class="tip">
 <h4>Approachable Concurrency: Menos Fricção</h4>
 
-Com [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html), erros de Sendable se tornam muito mais raros:
+Com [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency), erros de Sendable se tornam muito mais raros:
 
 - Se código não cruza fronteiras de isolamento, você não precisa de Sendable
 - Funções async ficam no actor do chamador em vez de pular para uma thread de segundo plano
@@ -396,7 +396,7 @@ Tipos `Sendable` são como fotocópias: seguros para compartilhar porque cada lu
 
 Você viu que domínios de isolamento protegem dados, e Sendable controla o que cruza entre eles. Mas como código acaba em um domínio de isolamento em primeiro lugar?
 
-Quando você chama uma função ou cria um closure, isolamento flui através do seu código. Com [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html), seu app começa no [`MainActor`](https://developer.apple.com/documentation/swift/mainactor), e esse isolamento se propaga para o código que você chama, a menos que algo explicitamente mude isso. Entender esse fluxo te ajuda a prever onde código roda e por que o compilador às vezes reclama.
+Quando você chama uma função ou cria um closure, isolamento flui através do seu código. Com [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency), seu app começa no [`MainActor`](https://developer.apple.com/documentation/swift/mainactor), e esse isolamento se propaga para o código que você chama, a menos que algo explicitamente mude isso. Entender esse fluxo te ajuda a prever onde código roda e por que o compilador às vezes reclama.
 
 ### Chamadas de Função
 
@@ -408,7 +408,7 @@ func helper() { }                    // Herda isolamento do chamador
 @concurrent func crunch() async { }  // Explicitamente roda fora do actor
 ```
 
-Com [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html), a maior parte do seu código herda isolamento do `MainActor`. A função roda onde o chamador roda, a menos que ela explicitamente opte por sair.
+Com [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency), a maior parte do seu código herda isolamento do `MainActor`. A função roda onde o chamador roda, a menos que ela explicitamente opte por sair.
 
 ### Closures
 
@@ -492,7 +492,7 @@ Vamos dar um passo atrás e ver como todas as peças se encaixam.
 
 Swift Concurrency pode parecer um monte de conceitos: `async/await`, `Task`, actors, `MainActor`, `Sendable`, domínios de isolamento. Mas existe realmente só uma ideia no centro de tudo: **isolamento é herdado por padrão**.
 
-Com [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) habilitado, seu app começa no [`MainActor`](https://developer.apple.com/documentation/swift/mainactor). Esse é seu ponto de partida. A partir daí:
+Com [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) habilitado, seu app começa no [`MainActor`](https://developer.apple.com/documentation/swift/mainactor). Esse é seu ponto de partida. A partir daí:
 
 - Toda função que você chama **herda** esse isolamento
 - Todo closure que você cria **captura** esse isolamento

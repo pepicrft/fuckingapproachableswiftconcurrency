@@ -275,7 +275,7 @@ let name = account.bankName()  // 不需要 await
 <div class="tip">
 <h4>Approachable Concurrency:更少摩擦</h4>
 
-[Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) 通过两个 Xcode 构建设置简化了心智模型:
+[Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) 通过两个 Xcode 构建设置简化了心智模型:
 
 - **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`: 除非你另外说明,一切都在 MainActor 上运行
 - **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`: `nonisolated` 异步函数留在调用者的 actor 上,而不是跳到后台线程
@@ -366,7 +366,7 @@ final class ThreadSafeCache: @unchecked Sendable {
 <div class="tip">
 <h4>Approachable Concurrency:更少摩擦</h4>
 
-用 [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html),Sendable 错误会少很多:
+用 [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency),Sendable 错误会少很多:
 
 - 如果代码不跨隔离边界,你不需要 Sendable
 - 异步函数留在调用者的 actor 上,而不是跳到后台线程
@@ -396,7 +396,7 @@ final class ThreadSafeCache: @unchecked Sendable {
 
 你已经看到隔离域保护数据,Sendable 控制什么可以跨越它们。但代码一开始怎么进入隔离域的?
 
-当你调用函数或创建闭包时,隔离会流经你的代码。用 [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html),你的应用从 [`MainActor`](https://developer.apple.com/documentation/swift/mainactor) 开始,这个隔离传播到你调用的代码,除非有东西显式改变它。理解这个流动帮助你预测代码在哪里运行,以及为什么编译器有时会抱怨。
+当你调用函数或创建闭包时,隔离会流经你的代码。用 [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency),你的应用从 [`MainActor`](https://developer.apple.com/documentation/swift/mainactor) 开始,这个隔离传播到你调用的代码,除非有东西显式改变它。理解这个流动帮助你预测代码在哪里运行,以及为什么编译器有时会抱怨。
 
 ### 函数调用
 
@@ -408,7 +408,7 @@ func helper() { }                    // 继承调用者的隔离
 @concurrent func crunch() async { }  // 显式在后台运行
 ```
 
-用 [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html),你的大部分代码继承 `MainActor` 隔离。函数在调用者运行的地方运行,除非它显式选择退出。
+用 [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency),你的大部分代码继承 `MainActor` 隔离。函数在调用者运行的地方运行,除非它显式选择退出。
 
 ### 闭包
 
@@ -492,7 +492,7 @@ Swift 团队推荐 [Task.detached 作为最后手段](https://forums.swift.org/t
 
 Swift 并发感觉像很多概念:`async/await`、`Task`、actors、`MainActor`、`Sendable`、隔离域。但其实中心只有一个想法:**隔离默认被继承。**
 
-启用 [Approachable Concurrency](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html) 后,你的应用从 [`MainActor`](https://developer.apple.com/documentation/swift/mainactor) 开始。这是你的起点。从那里:
+启用 [Approachable Concurrency](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency) 后,你的应用从 [`MainActor`](https://developer.apple.com/documentation/swift/mainactor) 开始。这是你的起点。从那里:
 
 - 你调用的每个函数**继承**那个隔离
 - 你创建的每个闭包**捕获**那个隔离

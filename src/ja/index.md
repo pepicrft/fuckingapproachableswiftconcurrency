@@ -275,7 +275,7 @@ let name = account.bankName()  // await 不要
 <div class="tip">
 <h4>親しみやすい並行処理: 摩擦を減らす</h4>
 
-[親しみやすい並行処理](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)は2つの Xcode ビルド設定でメンタルモデルをシンプルにする：
+[親しみやすい並行処理](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)は2つの Xcode ビルド設定でメンタルモデルをシンプルにする：
 
 - **`SWIFT_DEFAULT_ACTOR_ISOLATION`** = `MainActor`：他に指定しない限りすべてが MainActor で実行される
 - **`SWIFT_APPROACHABLE_CONCURRENCY`** = `YES`：`nonisolated` async 関数はバックグラウンドスレッドにジャンプする代わりに呼び出し元のアクターにとどまる
@@ -366,7 +366,7 @@ final class ThreadSafeCache: @unchecked Sendable {
 <div class="tip">
 <h4>親しみやすい並行処理: 摩擦を減らす</h4>
 
-[親しみやすい並行処理](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)では、Sendable エラーはずっと少なくなる：
+[親しみやすい並行処理](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)では、Sendable エラーはずっと少なくなる：
 
 - コードが分離境界を越えないなら、Sendable は不要
 - async 関数はバックグラウンドスレッドにホップする代わりに呼び出し元のアクターにとどまる
@@ -396,7 +396,7 @@ final class ThreadSafeCache: @unchecked Sendable {
 
 分離ドメインがデータを保護し、Sendable がその間を越えるものを制御することを見てきた。でも、そもそもコードはどうやって分離ドメインに入るのか？
 
-関数を呼び出したりクロージャを作成したりすると、分離はコードを通じて流れる。[親しみやすい並行処理](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)では、アプリは [`MainActor`](https://developer.apple.com/documentation/swift/mainactor) から始まり、何かが明示的に変更しない限り、その分離は呼び出すコードに伝播する。このフローを理解することで、コードがどこで実行されるか、なぜコンパイラが時々文句を言うかを予測できる。
+関数を呼び出したりクロージャを作成したりすると、分離はコードを通じて流れる。[親しみやすい並行処理](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)では、アプリは [`MainActor`](https://developer.apple.com/documentation/swift/mainactor) から始まり、何かが明示的に変更しない限り、その分離は呼び出すコードに伝播する。このフローを理解することで、コードがどこで実行されるか、なぜコンパイラが時々文句を言うかを予測できる。
 
 ### 関数呼び出し
 
@@ -408,7 +408,7 @@ func helper() { }                    // 呼び出し元の分離を継承
 @concurrent func crunch() async { }  // 明示的にオフアクターで実行
 ```
 
-[親しみやすい並行処理](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)では、ほとんどのコードが `MainActor` 分離を継承する。関数は呼び出し元がいる場所で実行される - 明示的にオプトアウトしない限り。
+[親しみやすい並行処理](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)では、ほとんどのコードが `MainActor` 分離を継承する。関数は呼び出し元がいる場所で実行される - 明示的にオプトアウトしない限り。
 
 ### クロージャ
 
@@ -492,7 +492,7 @@ Swift チームは [Task.detached を最後の手段として](https://forums.sw
 
 Swift 並行処理は多くの概念に感じられる: `async/await`、`Task`、アクター、`MainActor`、`Sendable`、分離ドメイン。でも実際には中心にあるのは一つのアイデアだけだ: **分離はデフォルトで継承される**。
 
-[親しみやすい並行処理](https://www.swift.org/documentation/articles/swift-6.2-release-notes.html)を有効にすると、アプリは [`MainActor`](https://developer.apple.com/documentation/swift/mainactor) から始まる。それが出発点だ。そこから:
+[親しみやすい並行処理](https://www.swift.org/blog/swift-6.2-released/#approachable-concurrency)を有効にすると、アプリは [`MainActor`](https://developer.apple.com/documentation/swift/mainactor) から始まる。それが出発点だ。そこから:
 
 - 呼び出すすべての関数がその分離を**継承**する
 - 作成するすべてのクロージャがその分離を**キャプチャ**する
