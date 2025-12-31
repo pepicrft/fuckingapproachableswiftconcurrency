@@ -650,7 +650,13 @@ func fetchAll() async {
 | `async let` | 병렬 작업 시작 |
 | `TaskGroup` | 동적 병렬 작업 |
 
-## 더 읽을 거리
+  </div>
+</section>
+
+<section id="further-reading">
+  <div class="container">
+
+## [더 읽을 거리](#further-reading)
 
 <div class="resources">
 <h4>Matt Massicotte의 블로그 (강력 추천)</h4>
@@ -674,6 +680,78 @@ func fetchAll() async {
 
 - [Tuist](https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=tools) - 더 큰 팀과 코드베이스로 더 빠르게 개발하세요
 </div>
+
+  </div>
+</section>
+
+<section id="ai-skill">
+  <div class="container">
+
+## [AI 에이전트 스킬](#ai-skill)
+
+AI 코딩 어시스턴트가 Swift Concurrency를 이해하길 원하시나요? Claude Code, Codex, Amp, OpenCode 등의 AI 에이전트를 위해 이러한 멘탈 모델을 패키징한 **[SKILL.md](/SKILL.md)** 파일을 제공합니다.
+
+<div class="tip">
+<h4>스킬이란?</h4>
+
+스킬은 AI 코딩 에이전트에게 전문 지식을 가르치는 마크다운 파일입니다. Swift Concurrency 스킬을 에이전트에 추가하면, 비동기 Swift 코드 작성을 도와줄 때 이러한 개념들을 자동으로 적용합니다.
+</div>
+
+### 사용 방법
+
+에이전트를 선택하고 명령어를 실행하세요:
+
+<div class="code-tabs">
+  <div class="code-tabs-nav">
+    <button class="active">Claude Code</button>
+    <button>Codex</button>
+    <button>Amp</button>
+    <button>OpenCode</button>
+  </div>
+  <div class="code-tab-content active">
+
+```bash
+# 개인 스킬 (모든 프로젝트)
+mkdir -p ~/.claude/skills/swift-concurrency
+curl -o ~/.claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# 프로젝트 스킬 (이 프로젝트만)
+mkdir -p .claude/skills/swift-concurrency
+curl -o .claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# 글로벌 지침 (모든 프로젝트)
+curl -o ~/.codex/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# 프로젝트 지침 (이 프로젝트만)
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# 프로젝트 지침 (권장)
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# 글로벌 규칙 (모든 프로젝트)
+mkdir -p ~/.config/opencode
+curl -o ~/.config/opencode/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# 프로젝트 규칙 (이 프로젝트만)
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+</div>
+
+이 스킬에는 오피스 빌딩 비유, 격리 패턴, Sendable 가이드, 흔한 실수, 빠른 참조 표가 포함되어 있습니다. 에이전트가 Swift Concurrency 코드 작업 시 이 지식을 자동으로 활용합니다.
 
   </div>
 </section>

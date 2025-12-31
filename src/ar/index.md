@@ -650,7 +650,13 @@ func fetchAll() async {
 | `async let` | ابدأ عملاً متوازياً |
 | `TaskGroup` | عمل متوازي ديناميكي |
 
-## قراءة إضافية
+  </div>
+</section>
+
+<section id="further-reading">
+  <div class="container">
+
+## [قراءة إضافية](#further-reading)
 
 <div class="resources">
 <h4>مدونة Matt Massicotte (موصى به بشدة)</h4>
@@ -674,6 +680,78 @@ func fetchAll() async {
 
 - [Tuist](https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=tools) - طوّر أسرع مع فرق ومشاريع أكبر
 </div>
+
+  </div>
+</section>
+
+<section id="ai-skill">
+  <div class="container">
+
+## [مهارة وكيل الذكاء الاصطناعي](#ai-skill)
+
+هل تريد أن يفهم مساعد البرمجة بالذكاء الاصطناعي Swift Concurrency؟ نقدم ملف **[SKILL.md](/SKILL.md)** الذي يحزم هذه النماذج الذهنية لوكلاء الذكاء الاصطناعي مثل Claude Code و Codex و Amp و OpenCode وغيرها.
+
+<div class="tip">
+<h4>ما هي المهارة؟</h4>
+
+المهارة هي ملف markdown يعلّم وكلاء البرمجة بالذكاء الاصطناعي معرفة متخصصة. عندما تضيف مهارة Swift Concurrency إلى وكيلك، فإنه يطبق هذه المفاهيم تلقائياً عند مساعدتك في كتابة كود Swift غير متزامن.
+</div>
+
+### كيفية الاستخدام
+
+اختر وكيلك ونفّذ الأوامر:
+
+<div class="code-tabs">
+  <div class="code-tabs-nav">
+    <button class="active">Claude Code</button>
+    <button>Codex</button>
+    <button>Amp</button>
+    <button>OpenCode</button>
+  </div>
+  <div class="code-tab-content active">
+
+```bash
+# مهارة شخصية (جميع مشاريعك)
+mkdir -p ~/.claude/skills/swift-concurrency
+curl -o ~/.claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# مهارة المشروع (هذا المشروع فقط)
+mkdir -p .claude/skills/swift-concurrency
+curl -o .claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# تعليمات عامة (جميع مشاريعك)
+curl -o ~/.codex/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# تعليمات المشروع (هذا المشروع فقط)
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# تعليمات المشروع (موصى به)
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# قواعد عامة (جميع مشاريعك)
+mkdir -p ~/.config/opencode
+curl -o ~/.config/opencode/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# قواعد المشروع (هذا المشروع فقط)
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+</div>
+
+تتضمن المهارة تشبيه مبنى المكاتب، وأنماط العزل، ودليل Sendable، والأخطاء الشائعة، وجداول المرجع السريع. سيستخدم وكيلك هذه المعرفة تلقائياً عند العمل مع كود Swift Concurrency.
 
   </div>
 </section>

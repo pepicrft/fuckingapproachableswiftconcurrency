@@ -650,7 +650,13 @@ func fetchAll() async {
 | `async let` | 开始并行工作 |
 | `TaskGroup` | 动态并行工作 |
 
-## 延伸阅读
+  </div>
+</section>
+
+<section id="further-reading">
+  <div class="container">
+
+## [延伸阅读](#further-reading)
 
 <div class="resources">
 <h4>Matt Massicotte 的博客(强烈推荐)</h4>
@@ -674,6 +680,78 @@ func fetchAll() async {
 
 - [Tuist](https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=tools) - 让大型团队和代码库开发更快
 </div>
+
+  </div>
+</section>
+
+<section id="ai-skill">
+  <div class="container">
+
+## [AI 代理技能](#ai-skill)
+
+想让你的 AI 编程助手理解 Swift Concurrency？我们提供一个 **[SKILL.md](/SKILL.md)** 文件，为 Claude Code、Codex、Amp、OpenCode 等 AI 代理打包了这些心智模型。
+
+<div class="tip">
+<h4>什么是技能？</h4>
+
+技能是一个 markdown 文件，用于向 AI 编程代理教授专业知识。当你将 Swift Concurrency 技能添加到代理时，它会在帮助你编写异步 Swift 代码时自动应用这些概念。
+</div>
+
+### 如何使用
+
+选择你的代理并运行命令：
+
+<div class="code-tabs">
+  <div class="code-tabs-nav">
+    <button class="active">Claude Code</button>
+    <button>Codex</button>
+    <button>Amp</button>
+    <button>OpenCode</button>
+  </div>
+  <div class="code-tab-content active">
+
+```bash
+# 个人技能（所有项目）
+mkdir -p ~/.claude/skills/swift-concurrency
+curl -o ~/.claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# 项目技能（仅此项目）
+mkdir -p .claude/skills/swift-concurrency
+curl -o .claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# 全局指令（所有项目）
+curl -o ~/.codex/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# 项目指令（仅此项目）
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# 项目指令（推荐）
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# 全局规则（所有项目）
+mkdir -p ~/.config/opencode
+curl -o ~/.config/opencode/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# 项目规则（仅此项目）
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+</div>
+
+该技能包含办公大楼比喻、隔离模式、Sendable 指南、常见错误和快速参考表。当你处理 Swift Concurrency 代码时，代理会自动使用这些知识。
 
   </div>
 </section>

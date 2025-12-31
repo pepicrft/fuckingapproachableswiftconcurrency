@@ -145,6 +145,31 @@ The site is designed for deployment on:
 
 The `_redirects` file handles language-based routing using the Accept-Language header.
 
+## AI Agent Skill
+
+The project includes a **SKILL.md** file at `src/SKILL.md` that packages the Swift Concurrency knowledge for use with AI coding agents (Claude Code, Cursor, etc.).
+
+### Keeping SKILL.md in Sync
+
+When updating content in the language files (especially `src/en/index.md`), ensure that significant changes are reflected in `src/SKILL.md`:
+
+- New concepts or mental models
+- Updated best practices or recommendations
+- New common mistakes or pitfalls
+- Changes to the "Office Building" analogy
+- Updates related to new Swift versions (e.g., Swift 6.2 Approachable Concurrency)
+
+The skill file should remain a condensed, actionable reference. It does not need to mirror every detail, but should capture the essential guidance that helps developers write correct concurrent Swift code.
+
+### Skill Distribution
+
+The SKILL.md file is served as a static asset at `https://fuckingapproachableswiftconcurrency.com/SKILL.md`. Users can:
+
+1. Download it directly and place it in their agent's skills directory
+2. Reference it in their agent configuration
+3. Use it as a personal skill (`~/.claude/skills/swift-concurrency/SKILL.md`)
+4. Use it as a project skill (`.claude/skills/swift-concurrency/SKILL.md`)
+
 ## Credits
 
 - Original content and mental models inspired by [Matt Massicotte's blog](https://www.massicotte.org/)

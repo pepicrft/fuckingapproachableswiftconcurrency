@@ -648,7 +648,13 @@ If you're already in an async context, prefer structured concurrency (`async let
 | `async let` | Start parallel work |
 | `TaskGroup` | Dynamic parallel work |
 
-## Further Reading
+  </div>
+</section>
+
+<section id="further-reading">
+  <div class="container">
+
+## [Further Reading](#further-reading)
 
 <div class="resources">
 <h4>Matt Massicotte's Blog (Highly Recommended)</h4>
@@ -672,6 +678,78 @@ If you're already in an async context, prefer structured concurrency (`async let
 
 - [Tuist](https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=tools) - Ship faster with larger teams and codebases
 </div>
+
+  </div>
+</section>
+
+<section id="ai-skill">
+  <div class="container">
+
+## [AI Agent Skill](#ai-skill)
+
+Want your AI coding assistant to understand Swift Concurrency? We provide a **[SKILL.md](/SKILL.md)** file that packages these mental models for AI agents like Claude Code, Codex, Amp, OpenCode, and others.
+
+<div class="tip">
+<h4>What is a Skill?</h4>
+
+A skill is a markdown file that teaches AI coding agents specialized knowledge. When you add the Swift Concurrency skill to your agent, it automatically applies these concepts when helping you write async Swift code.
+</div>
+
+### How to Use
+
+Choose your agent and run the commands below:
+
+<div class="code-tabs">
+  <div class="code-tabs-nav">
+    <button class="active">Claude Code</button>
+    <button>Codex</button>
+    <button>Amp</button>
+    <button>OpenCode</button>
+  </div>
+  <div class="code-tab-content active">
+
+```bash
+# Personal skill (all your projects)
+mkdir -p ~/.claude/skills/swift-concurrency
+curl -o ~/.claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# Project skill (just this project)
+mkdir -p .claude/skills/swift-concurrency
+curl -o .claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# Global instructions (all your projects)
+curl -o ~/.codex/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# Project instructions (just this project)
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# Project instructions (recommended)
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# Global rules (all your projects)
+mkdir -p ~/.config/opencode
+curl -o ~/.config/opencode/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# Project rules (just this project)
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+</div>
+
+The skill includes the Office Building analogy, isolation patterns, Sendable guidance, common mistakes, and quick reference tables. Your agent will use this knowledge automatically when you work with Swift Concurrency code.
 
   </div>
 </section>

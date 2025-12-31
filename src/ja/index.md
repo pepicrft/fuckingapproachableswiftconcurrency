@@ -650,7 +650,13 @@ func fetchAll() async {
 | `async let` | 並列作業を開始 |
 | `TaskGroup` | 動的な並列作業 |
 
-## 参考資料
+  </div>
+</section>
+
+<section id="further-reading">
+  <div class="container">
+
+## [参考資料](#further-reading)
 
 <div class="resources">
 <h4>Matt Massicotte のブログ（強く推奨）</h4>
@@ -674,6 +680,78 @@ func fetchAll() async {
 
 - [Tuist](https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=tools) - 大規模なチームとコードベースでより速く開発
 </div>
+
+  </div>
+</section>
+
+<section id="ai-skill">
+  <div class="container">
+
+## [AI エージェントスキル](#ai-skill)
+
+AI コーディングアシスタントに Swift Concurrency を理解させたいですか？Claude Code、Codex、Amp、OpenCode などの AI エージェント向けに、これらのメンタルモデルをパッケージ化した **[SKILL.md](/SKILL.md)** ファイルを提供しています。
+
+<div class="tip">
+<h4>スキルとは？</h4>
+
+スキルは AI コーディングエージェントに専門知識を教える markdown ファイルです。Swift Concurrency スキルをエージェントに追加すると、非同期 Swift コードの作成を支援する際にこれらの概念を自動的に適用します。
+</div>
+
+### 使い方
+
+エージェントを選択してコマンドを実行してください：
+
+<div class="code-tabs">
+  <div class="code-tabs-nav">
+    <button class="active">Claude Code</button>
+    <button>Codex</button>
+    <button>Amp</button>
+    <button>OpenCode</button>
+  </div>
+  <div class="code-tab-content active">
+
+```bash
+# 個人スキル（すべてのプロジェクト）
+mkdir -p ~/.claude/skills/swift-concurrency
+curl -o ~/.claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# プロジェクトスキル（このプロジェクトのみ）
+mkdir -p .claude/skills/swift-concurrency
+curl -o .claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# グローバル指示（すべてのプロジェクト）
+curl -o ~/.codex/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# プロジェクト指示（このプロジェクトのみ）
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# プロジェクト指示（推奨）
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# グローバルルール（すべてのプロジェクト）
+mkdir -p ~/.config/opencode
+curl -o ~/.config/opencode/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# プロジェクトルール（このプロジェクトのみ）
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+</div>
+
+このスキルには、オフィスビルの比喩、隔離パターン、Sendable ガイド、よくある間違い、クイックリファレンス表が含まれています。Swift Concurrency コードを扱う際に、エージェントがこの知識を自動的に活用します。
 
   </div>
 </section>

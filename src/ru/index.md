@@ -650,7 +650,13 @@ func fetchAll() async {
 | `async let` | Запустить параллельную работу |
 | `TaskGroup` | Динамическая параллельная работа |
 
-## Дополнительное чтение
+  </div>
+</section>
+
+<section id="further-reading">
+  <div class="container">
+
+## [Дополнительное чтение](#further-reading)
 
 <div class="resources">
 <h4>Блог Matt Massicotte (очень рекомендуется)</h4>
@@ -674,6 +680,78 @@ func fetchAll() async {
 
 - [Tuist](https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=tools) - Разрабатывайте быстрее с большими командами и кодовыми базами
 </div>
+
+  </div>
+</section>
+
+<section id="ai-skill">
+  <div class="container">
+
+## [Навык для ИИ-агентов](#ai-skill)
+
+Хотите, чтобы ваш ИИ-помощник по коду понимал Swift Concurrency? Мы предоставляем файл **[SKILL.md](/SKILL.md)**, который упаковывает эти ментальные модели для ИИ-агентов, таких как Claude Code, Codex, Amp, OpenCode и других.
+
+<div class="tip">
+<h4>Что такое навык?</h4>
+
+Навык - это markdown-файл, который обучает ИИ-агентов специализированным знаниям. Когда вы добавляете навык Swift Concurrency к вашему агенту, он автоматически применяет эти концепции при помощи в написании асинхронного Swift-кода.
+</div>
+
+### Как использовать
+
+Выберите вашего агента и выполните команды:
+
+<div class="code-tabs">
+  <div class="code-tabs-nav">
+    <button class="active">Claude Code</button>
+    <button>Codex</button>
+    <button>Amp</button>
+    <button>OpenCode</button>
+  </div>
+  <div class="code-tab-content active">
+
+```bash
+# Личный навык (все ваши проекты)
+mkdir -p ~/.claude/skills/swift-concurrency
+curl -o ~/.claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# Навык проекта (только этот проект)
+mkdir -p .claude/skills/swift-concurrency
+curl -o .claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# Глобальные инструкции (все ваши проекты)
+curl -o ~/.codex/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# Инструкции проекта (только этот проект)
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# Инструкции проекта (рекомендуется)
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+  <div class="code-tab-content">
+
+```bash
+# Глобальные правила (все ваши проекты)
+mkdir -p ~/.config/opencode
+curl -o ~/.config/opencode/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# Правила проекта (только этот проект)
+curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+</div>
+
+Навык включает аналогию офисного здания, паттерны изоляции, руководство по Sendable, распространённые ошибки и таблицы быстрого справочника. Ваш агент автоматически использует эти знания при работе с кодом Swift Concurrency.
 
   </div>
 </section>

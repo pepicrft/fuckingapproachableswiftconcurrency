@@ -400,6 +400,15 @@ p {
   border-bottom: 2px solid transparent;
   margin-bottom: -2px;
   transition: color 0.15s, border-color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.code-tabs-nav button svg {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
 
 .code-tabs-nav button:hover {
