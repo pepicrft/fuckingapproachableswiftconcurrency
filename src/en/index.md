@@ -609,30 +609,11 @@ func badIdea() async {
 
 Swift's cooperative thread pool has limited threads. Blocking one with `DispatchSemaphore`, `DispatchGroup.wait()`, or similar calls can cause deadlocks. If you need to bridge sync and async code, use `async let` or restructure to stay fully async.
 
-### Creating unnecessary Tasks
-
-```swift
-// Unnecessary Task creation
-func fetchAll() async {
-    Task { await fetchUsers() }
-    Task { await fetchPosts() }
-}
-
-// Better - use structured concurrency
-func fetchAll() async {
-    async let users = fetchUsers()
-    async let posts = fetchPosts()
-    await (users, posts)
-}
-```
-
-If you're already in an async context, prefer structured concurrency (`async let`, `TaskGroup`) over creating unstructured `Task`s. Structured concurrency handles cancellation automatically and makes the code easier to reason about.
-
 <div id="managedtasks">
 
 ### Create unmanaged tasks
 
-Tasks that you create manually with `Task { ... }` or `Task.detached { ... }` are not managed. After you create unmanaged tasks, you can't control them. You can't cancel them if the task from which you started it is cancelled. You can't know if they finished their work, if they throw an error, or collect their return value. Starting such a task is like throwing a bottle into the sea and hoping it will deliver its message to its destination, without ever seeing that bottle again.
+Tasks that you create manually with `Task { ... }` or `Task.detached { ... }` are not managed. After you create unmanaged tasks, you can't control them. You can't cancel them if the task from which you started it is cancelled. You can't know if they finished their work, if they threw an error, or collect their return value. Starting such a task is like throwing a bottle into the sea and hoping it will deliver its message to its destination, without ever seeing that bottle again.
 
 <div class="analogy">
 <h4>The Office Building</h4>
@@ -644,7 +625,7 @@ After you dispatch work to the employee, you have no means to communicate with h
 What you actually want is to give the employee a walkie-talkie to communicate with her while she handles the request. With the walkie-talkie, you can tell her to stop, or she can tell you when she encounters an error, or she can report the result of the request you gave her.
 </div>
 
-Instead of creating unmanaged tasks, use Swift concurrency to keep control of the subtasks you create. Use `TaskGroup` to manage a (group of) subtask(s). Swift provides a couple of `withTaskGroup() { group in ... }` functions to help create a task group.
+Instead of creating unmanaged tasks, use Swift concurrency to keep control of the subtasks you create. Use `TaskGroup` to manage a (group of) subtask(s). Swift provides a couple of `withTaskGroup() { group in ... }` functions to help create task groups.
 
 ```swift
 func doWork() async {
@@ -679,20 +660,6 @@ for await result in group {
 // sum == 3 
 ```
 
-If you need more control or only a few results, you can call next() directly:
-
-```swift
-guard let first = await group.next() else {
-    group.cancelAll()
-    return 0
-}
-// first == 1 or first == 2
-let second = await group.next() ?? 0
-group.cancelAll()
-// second == 2 or second == 1
-return first + second
-```
-
 You can learn more about [TaskGroup](https://developer.apple.com/documentation/swift/taskgroup) in the Swift documentation.
 
 #### Note about Tasks and SwiftUI.
@@ -703,57 +670,31 @@ You can't use `TaskGroup` from a synchronous SwiftUI modifier because `withTaskG
 
 As an alternative, SwiftUI offers an asynchronous modifier that you can use to start asynchronous operations. The `.task { }` modifier, which we already mentioned, accepts a `() async -> Void` function, ideal for calling other `async` functions. It is available on every `View`. It is triggered before the view appears and the tasks it creates are managed and bound to the lifecycle of the view, meaning the tasks are cancelled when the view disappears.
 
-Back to the tap-to-load-an-image example: instead of invoking an asynchronous `loadImage()` function from a synchronous `.onTap() { ... }` function, you can create an asynchronous stream of events that will be handled by `async` functions.
+Back to the tap-to-load-an-image example: instead of creating an unmanaged task to call an asynchronous `loadImage()` function from a synchronous `.onTap() { ... }` function, you can toggle a flag on the tap gesture and use the `task(id:)` modifier to asynchronoulsy load images when the `id` (the flag) value changes.
 
-Here is a simple example:
+Here is a example:
 
 ```swift
 struct ContentView: View {
     
-    // the list of events the UI can generate
-    enum Event {
-        case buttonClicked
-    }
+    @State private var shouldLoadImage = false
     
-    var stream: AsyncStream<Event>? = nil
-    var continuation: AsyncStream<Event>.Continuation? = nil
-    
-    init() {
-        self.stream = AsyncStream { continuation in
-            self.continuation = continuation
-        }
-    }
     var body: some View {
         Button("Click Me !") {
-            // produce an event
-            self.continuation?.yield(.buttonClicked)
+            // toggle the flag
+            shouldLoadImage = !shouldLoadImage
         }
         // the View manages the subtask
         // it starts before the view is displayed 
         // and stops when the view is hidden
-        .task {
-            // we are in an async context, we can call an async function
-            await processEventStream()
-        }
-    }
-    
-    // This is an async function
-    func processEventStream() async throws {
-        guard let stream = self.stream else { return }
-
-        // consume UI events
-        for try await event in stream {
-            
-            switch event {
-            // asynchronously load the image when the button is clicked  
-            case .buttonClicked:
-              try await loadImage()
-            }
+        .task(id: shouldLoadImage) {
+            // when the flag value changes, SwiftUI restarts the task
+            guard shouldLoadImage else { return }
+            await loadImage()
         }
     }
 }
 ```
-
 </div>
 
   </div>
