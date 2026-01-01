@@ -773,8 +773,9 @@ Choose your agent and run the commands below:
 <div class="code-tabs">
   <div class="code-tabs-nav">
     <button class="active">Claude Code</button>
-    <button>Codex</button>
     <button>Amp</button>
+    <button>Codex</button>
+    <button>Kiro</button>
     <button>OpenCode</button>
   </div>
   <div class="code-tab-content active">
@@ -792,9 +793,7 @@ curl -o .claude/skills/swift-concurrency/SKILL.md https://fuckingapproachableswi
   <div class="code-tab-content">
 
 ```bash
-# Global instructions (all your projects)
-curl -o ~/.codex/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
-# Project instructions (just this project)
+# Project instructions (recommended)
 curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
 ```
 
@@ -802,11 +801,27 @@ curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
   <div class="code-tab-content">
 
 ```bash
-# Project instructions (recommended)
+# Global instructions (all your projects)
+curl -o ~/.codex/AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# Project instructions (just this project)
 curl -o AGENTS.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
 ```
 
   </div>
+
+  <div class="code-tab-content">
+
+```bash
+# Global rules (all your projects)
+mkdir -p ~/.kiro/steering
+curl -o ~/.kiro/steering/swift-concurrency.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+# Project rules (just this project)
+mkdir -p .kiro/steering
+curl -o .kiro/steering/swift-concurrency.md https://fuckingapproachableswiftconcurrency.com/SKILL.md
+```
+
+  </div>
+
   <div class="code-tab-content">
 
 ```bash
