@@ -47,13 +47,7 @@ pnpm install
 pnpm dev
 ```
 
-Then open **http://localhost:8080/en/** in your browser. 
-> You can switch to other languages using the language selector at the top of the page.
-
-<details><summary>Explanation</summary>
-
-In local development, you must access a specific language path (e.g., `/en/`, `/es/`, `/ko/`) directly. The root URL (`http://localhost:8080/`) will return a 404 because Eleventy's dev server doesn't process the `_redirects` file. Language-based routing only works in production when deployed to Netlify or Cloudflare Pages, which read the `_redirects` file and use the `Accept-Language` header to automatically route users to their preferred language.
-</details>
+Then open **http://localhost:8080/** in your browser.
 
 ### Build
 

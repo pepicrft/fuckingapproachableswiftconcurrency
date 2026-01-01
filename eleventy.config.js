@@ -22,6 +22,16 @@ export default function(eleventyConfig) {
     ru: { name: "Russian", dir: "ltr", native: "Русский" }
   });
 
+  // Dev server configuration: redirect root to /en/
+  eleventyConfig.setServerOptions({
+    onRequest: {
+      "/": function({ url }) {
+        const redirectUrl = new URL("/en/", url);
+        return Response.redirect(redirectUrl, 302);
+      }
+    }
+  });
+
   return {
     dir: {
       input: "src",
