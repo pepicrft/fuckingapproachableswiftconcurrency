@@ -33,6 +33,9 @@
 # Russian
 /  /ru/  302  Language=ru
 
+# Turkish
+/  /tr/  302  Language=tr
+
 # English (explicit match)
 /  /en/  302  Language=en
 

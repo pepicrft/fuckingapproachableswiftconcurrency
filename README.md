@@ -24,7 +24,7 @@ In the tradition of [fuckingblocksyntax.com](https://fuckingblocksyntax.com/) an
 
 ## Languages
 
-Available in 10 languages: English, Spanish, Portuguese (BR & PT), Arabic, Korean, Japanese, Chinese (Simplified & Traditional), and Russian.
+Available in 10 languages: English, Spanish, Portuguese (BR & PT), Arabic, Korean, Japanese, Chinese (Simplified & Traditional), Russian and Turkish.
 
 ## Development
 
