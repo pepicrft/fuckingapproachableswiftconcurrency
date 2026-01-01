@@ -47,6 +47,8 @@ pnpm install
 pnpm dev
 ```
 
+Then open **http://localhost:8080/** in your browser.
+
 ### Build
 
 ```bash
