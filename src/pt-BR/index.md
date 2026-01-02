@@ -186,7 +186,7 @@ Todos funcionavam, mas segurança era totalmente sua responsabilidade. O compila
 
 ### O Problema: Data Races
 
-Um [data race](https://developer.apple.com/documentation/xcode/data-race) acontece quando duas threads acessam a mesma memória ao mesmo tempo, e pelo menos uma está escrevendo:
+Um [data race](https://developer.apple.com/documentation/xcode/data-races) acontece quando duas threads acessam a mesma memória ao mesmo tempo, e pelo menos uma está escrevendo:
 
 ```swift
 var count = 0

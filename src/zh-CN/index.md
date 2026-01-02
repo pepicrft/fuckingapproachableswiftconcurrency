@@ -186,7 +186,7 @@ try await withThrowingTaskGroup(of: Void.self) { group in
 
 ### 问题:数据竞争
 
-[数据竞争](https://developer.apple.com/documentation/xcode/data-race)发生在两个线程同时访问同一块内存,且至少有一个在写:
+[数据竞争](https://developer.apple.com/documentation/xcode/data-races)发生在两个线程同时访问同一块内存,且至少有一个在写:
 
 ```swift
 var count = 0

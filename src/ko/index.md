@@ -186,7 +186,7 @@ Swift의 동시성 시스템 전에는 실행을 관리하는 여러 방법이 �
 
 ### 문제: 데이터 레이스
 
-[데이터 레이스](https://developer.apple.com/documentation/xcode/data-race)는 두 스레드가 동시에 같은 메모리에 접근하고, 적어도 하나가 쓰고 있을 때 발생합니다:
+[데이터 레이스](https://developer.apple.com/documentation/xcode/data-races)는 두 스레드가 동시에 같은 메모리에 접근하고, 적어도 하나가 쓰고 있을 때 발생합니다:
 
 ```swift
 var count = 0

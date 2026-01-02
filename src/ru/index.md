@@ -186,7 +186,7 @@ try await withThrowingTaskGroup(of: Void.self) { group in
 
 ### Проблема: гонки данных
 
-[Гонка данных](https://developer.apple.com/documentation/xcode/data-race) случается, когда два потока одновременно обращаются к одной памяти, и хотя бы один пишет:
+[Гонка данных](https://developer.apple.com/documentation/xcode/data-races) случается, когда два потока одновременно обращаются к одной памяти, и хотя бы один пишет:
 
 ```swift
 var count = 0
