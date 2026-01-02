@@ -186,7 +186,7 @@ try await withThrowingTaskGroup(of: Void.self) { group in
 
 ### 問題：資料競爭
 
-當兩個執行緒同時存取相同的記憶體，而且至少有一個在寫入時，就會發生[資料競爭](https://developer.apple.com/documentation/xcode/data-race)：
+當兩個執行緒同時存取相同的記憶體，而且至少有一個在寫入時，就會發生[資料競爭](https://developer.apple.com/documentation/xcode/data-races)：
 
 ```swift
 var count = 0

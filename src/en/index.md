@@ -184,7 +184,7 @@ All of these worked, but safety was entirely on you. The compiler couldn't help 
 
 ### The Problem: Data Races
 
-A [data race](https://developer.apple.com/documentation/xcode/data-race) happens when two threads access the same memory at the same time, and at least one is writing:
+A [data race](https://developer.apple.com/documentation/xcode/data-races) happens when two threads access the same memory at the same time, and at least one is writing:
 
 ```swift
 var count = 0

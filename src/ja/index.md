@@ -186,7 +186,7 @@ Swift の並行処理システム以前は、実行を管理するいくつか�
 
 ### 問題: データレース
 
-[データレース](https://developer.apple.com/documentation/xcode/data-race)は、二つのスレッドが同じメモリに同時にアクセスし、少なくとも一方が書き込んでいるときに起こる:
+[データレース](https://developer.apple.com/documentation/xcode/data-races)は、二つのスレッドが同じメモリに同時にアクセスし、少なくとも一方が書き込んでいるときに起こる:
 
 ```swift
 var count = 0

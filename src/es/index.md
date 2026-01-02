@@ -186,7 +186,7 @@ Todos estos funcionaban, pero la seguridad era enteramente tu responsabilidad. E
 
 ### El Problema: Data Races
 
-Un [data race](https://developer.apple.com/documentation/xcode/data-race) ocurre cuando dos hilos acceden a la misma memoria al mismo tiempo, y al menos uno está escribiendo:
+Un [data race](https://developer.apple.com/documentation/xcode/data-races) ocurre cuando dos hilos acceden a la misma memoria al mismo tiempo, y al menos uno está escribiendo:
 
 ```swift
 var count = 0
