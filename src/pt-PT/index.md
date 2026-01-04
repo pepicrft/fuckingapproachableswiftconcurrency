@@ -133,6 +133,19 @@ Button("Guardar") {
 }
 ```
 
+### Aceder aos resultados de Task
+
+Quando crias uma Task, recebes um handle. Usa `.value` para esperar e obter o resultado:
+
+```swift
+let handle = Task {
+    return await fetchUserData()
+}
+let userData = await handle.value  // Suspende até a task completar
+```
+
+Isto é útil quando precisas do resultado mais tarde, ou quando queres guardar o handle da task e fazer await noutro sítio.
+
 E se precisares de carregar o avatar, bio e estatísticas de uma vez? Usa um [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup) para buscar em paralelo:
 
 ```swift

@@ -133,6 +133,19 @@ Button("Save") {
 }
 ```
 
+### الوصول لنتائج المهام
+
+عندما تنشئ Task، تحصل على مقبض. استخدم `.value` للانتظار واسترجاع النتيجة:
+
+```swift
+let handle = Task {
+    return await fetchUserData()
+}
+let userData = await handle.value  // يتوقف حتى تكتمل المهمة
+```
+
+هذا مفيد عندما تحتاج النتيجة لاحقاً، أو عندما تريد تخزين مقبض المهمة وانتظاره في مكان آخر.
+
 ماذا لو احتجت تحميل الصورة والسيرة والإحصائيات كلها مرة واحدة؟ استخدم [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup) لجلبها بالتوازي:
 
 ```swift

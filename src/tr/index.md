@@ -134,6 +134,19 @@ Button("Save") {
 }
 ```
 
+### Task Sonuçlarına Erişim
+
+Bir Task oluşturduğunuzda, bir handle alırsınız. Sonucu beklemek ve almak için `.value` kullanın:
+
+```swift
+let handle = Task {
+    return await fetchUserData()
+}
+let userData = await handle.value  // Task tamamlanana kadar askıya alır
+```
+
+Bu, sonuca daha sonra ihtiyacınız olduğunda veya task handle'ını saklayıp başka bir yerde await etmek istediğinizde kullanışlıdır.
+
 Peki ya avatar, biyografi ve istatistiklerin hepsini aynı anda yüklemeniz gerekirse? Bunları paralel olarak fetch'lemek için bir [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup) kullanın:
 
 ```swift

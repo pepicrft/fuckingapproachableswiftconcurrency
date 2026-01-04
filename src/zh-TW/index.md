@@ -133,6 +133,19 @@ Button("Save") {
 }
 ```
 
+### 存取 Task 結果
+
+當你建立一個 Task 時，會得到一個句柄。使用 `.value` 來等待並取得結果：
+
+```swift
+let handle = Task {
+    return await fetchUserData()
+}
+let userData = await handle.value  // 暫停直到任務完成
+```
+
+當你需要稍後取得結果，或者想要儲存任務句柄並在其他地方 await 它時，這很有用。
+
 如果你需要同時載入頭像、簡介和統計資料怎麼辦？用 [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup) 並行取得它們：
 
 ```swift

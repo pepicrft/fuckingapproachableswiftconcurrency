@@ -133,6 +133,19 @@ Button("Save") {
 }
 ```
 
+### Task 결과 접근하기
+
+Task를 생성하면 핸들을 받습니다. `.value`를 사용해서 결과를 기다리고 가져올 수 있습니다:
+
+```swift
+let handle = Task {
+    return await fetchUserData()
+}
+let userData = await handle.value  // 태스크가 완료될 때까지 일시 중단
+```
+
+이건 나중에 결과가 필요하거나, 태스크 핸들을 저장해서 다른 곳에서 await하고 싶을 때 유용합니다.
+
 아바타, 바이오, 통계를 한꺼번에 로드해야 한다면? [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup)을 사용해서 병렬로 가져오세요:
 
 ```swift
