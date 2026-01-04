@@ -186,7 +186,7 @@ try await withThrowingTaskGroup(of: Void.self) { group in
 
 ### المشكلة: سباقات البيانات
 
-[سباق البيانات](https://developer.apple.com/documentation/xcode/data-race) يحدث عندما يصل خيطان لنفس الذاكرة في نفس الوقت، وواحد منهم على الأقل يكتب:
+[سباق البيانات](https://developer.apple.com/documentation/xcode/data-races) يحدث عندما يصل خيطان لنفس الذاكرة في نفس الوقت، وواحد منهم على الأقل يكتب:
 
 ```swift
 var count = 0
