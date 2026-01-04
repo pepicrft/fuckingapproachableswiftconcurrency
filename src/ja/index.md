@@ -133,6 +133,19 @@ Button("Save") {
 }
 ```
 
+### Taskの結果にアクセスする
+
+Taskを作成すると、ハンドルが返される。`.value`を使って結果を待って取得する:
+
+```swift
+let handle = Task {
+    return await fetchUserData()
+}
+let userData = await handle.value  // タスクが完了するまで中断
+```
+
+これは後で結果が必要な場合や、タスクハンドルを保存して別の場所でawaitしたい場合に便利。
+
 アバター、自己紹介、統計情報を一度に読み込む必要がある場合は？[`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup) を使って並列に取得する:
 
 ```swift

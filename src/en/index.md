@@ -131,6 +131,19 @@ Button("Save") {
 }
 ```
 
+### Accessing Task Results
+
+When you create a Task, you get a handle back. Use `.value` to wait for and retrieve the result:
+
+```swift
+let handle = Task {
+    return await fetchUserData()
+}
+let userData = await handle.value  // Suspends until task completes
+```
+
+This is useful when you need the result later, or when you want to store the task handle and await it elsewhere.
+
 What if you need to load the avatar, bio, and stats all at once? Use a [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup) to fetch them in parallel:
 
 ```swift
