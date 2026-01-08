@@ -153,6 +153,24 @@ With Approachable Concurrency, isolation flows from MainActor through your code:
 - **Task { }**: Inherits actor isolation from creation site
 - **Task.detached { }**: No inheritance (rarely needed)
 
+### Preserving Isolation with #isolation
+
+When writing generic async functions that accept closures, use `#isolation` to preserve the caller's isolation:
+
+```swift
+// Without #isolation: "Sending value of non-Sendable type" error
+func withRetry<T>(attempts: Int, block: () async throws -> T) async rethrows -> T
+
+// With #isolation: works from any isolation context
+func withRetry<T>(
+    isolation: isolated (any Actor)? = #isolation,
+    attempts: Int,
+    block: () async throws -> T
+) async rethrows -> T
+```
+
+Add `isolation: isolated (any Actor)? = #isolation` as the first parameter to async utilities that accept closures. The function runs in the caller's isolation domain, so closures don't cross boundaries.
+
 ## Common Mistakes to Avoid
 
 ### 1. Thinking async = background
@@ -213,6 +231,7 @@ await (users, posts)
 | `nonisolated` | Opts out of actor isolation |
 | `Sendable` | Safe to pass between isolation domains |
 | `@concurrent` | Always run on background (Swift 6.2+) |
+| `#isolation` | Capture caller's isolation context |
 | `async let` | Start parallel work |
 | `TaskGroup` | Dynamic parallel work |
 
