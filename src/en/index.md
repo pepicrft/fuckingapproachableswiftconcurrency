@@ -486,7 +486,7 @@ The tasks you schedule with `Task { ... }` are not managed. There is no way for 
 [Task.detached should be your last resort](https://forums.swift.org/t/revisiting-when-to-use-task-detached/57929). Detached tasks don't inherit priority, task-local values, or actor context. If you need CPU-intensive work off the main actor, mark the function `@concurrent` instead.
 </div>
 
-### Preserving Isolation: #isolation
+### Preserving Isolation in Async Utilities
 
 Sometimes you write a generic async function that accepts a closure - a wrapper, a retry helper, a transaction scope. The caller passes a closure, your function runs it. Simple, right?
 
@@ -510,7 +510,32 @@ Sending value of non-Sendable type '() async throws -> T' risks causing data rac
 
 What's happening? Your closure captures state from MainActor, but `measure` is `nonisolated`. Swift sees a non-Sendable closure crossing an isolation boundary - exactly what it's designed to prevent.
 
-The fix is [`#isolation`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/expressions/#Isolation-Expression). This special expression captures the caller's isolation context and lets your function run in the same isolation domain:
+The simplest fix is `nonisolated(nonsending)`. This tells Swift the function should stay on whatever executor called it:
+
+```swift
+nonisolated(nonsending)
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+Now the entire function runs on the caller's executor. Call it from MainActor, it stays on MainActor. Call it from a custom actor, it stays there. The closure never crosses an isolation boundary, so no Sendable check is needed.
+
+<div class="tip">
+<h4>When to use each approach</h4>
+
+**`nonisolated(nonsending)`** - The simple choice. Just add the attribute. Use this when you just need to stay on the caller's executor.
+
+**`isolation: isolated (any Actor)? = #isolation`** - The explicit choice. Adds a parameter that gives you access to the actor instance. Use this when you need to pass the isolation context to other functions or inspect which actor you're on.
+</div>
+
+If you do need explicit access to the actor, use an [`#isolation`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/expressions/#Isolation-Expression) parameter instead:
 
 ```swift
 func measure<T>(
@@ -525,15 +550,7 @@ func measure<T>(
 }
 ```
 
-Now when you call `measure` from MainActor, the function runs on MainActor too. The closure never crosses an isolation boundary, so no Sendable check is needed. Call it from a custom actor, and it runs on that actor. Call it from nonisolated code, and it runs nonisolated.
-
-<div class="tip">
-<h4>The pattern</h4>
-
-Add `isolation: isolated (any Actor)? = #isolation` as the **first parameter** to any generic async function that accepts closures. The default value `#isolation` automatically captures the caller's context at the call site.
-</div>
-
-This pattern is essential for building async utilities that feel natural to use. Without it, callers would need to make their closures `@Sendable` or jump through hoops to satisfy the compiler.
+Both approaches are essential for building async utilities that feel natural to use. Without them, callers would need to make their closures `@Sendable` or jump through hoops to satisfy the compiler.
 
 <div class="analogy">
 <h4>Walking Through the Building</h4>
@@ -776,9 +793,10 @@ struct ContentView: View {
 | `@MainActor` | Runs on main thread |
 | `actor` | Type with isolated mutable state |
 | `nonisolated` | Opts out of actor isolation |
+| `nonisolated(nonsending)` | Stay on caller's executor |
 | `Sendable` | Safe to pass between isolation domains |
 | `@concurrent` | Always run on background (Swift 6.2+) |
-| `#isolation` | Capture caller's isolation context |
+| `#isolation` | Capture caller's isolation as parameter |
 | `async let` | Start parallel work |
 | `TaskGroup` | Dynamic parallel work |
 

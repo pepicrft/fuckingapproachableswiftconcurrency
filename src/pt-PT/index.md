@@ -488,6 +488,72 @@ As tasks que agendas com `Task { ... }` não são geridas. Não há forma de as 
 [Task.detached deve ser o teu último recurso](https://forums.swift.org/t/revisiting-when-to-use-task-detached/57929). Tasks detached não herdam prioridade, valores task-local, ou contexto de actor. Se precisares de trabalho intensivo de CPU fora do main actor, marca a função com `@concurrent` em vez disso.
 </div>
 
+### Preservar Isolamento em Utilitários Async
+
+Por vezes escreves uma função async genérica que aceita um closure - um wrapper, um helper de retry, um scope de transação. O chamador passa um closure, a tua função executa-o. Simples, certo?
+
+```swift
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+Mas quando chamas isto de um contexto `@MainActor`, o Swift queixa-se:
+
+<div class="compiler-error">
+Sending value of non-Sendable type '() async throws -> T' risks causing data races
+</div>
+
+O que está a acontecer? O teu closure captura estado do MainActor, mas `measure` é `nonisolated`. O Swift vê um closure não Sendable a cruzar uma fronteira de isolamento - exatamente o que foi concebido para prevenir.
+
+A solução mais simples é `nonisolated(nonsending)`. Isto diz ao Swift que a função deve ficar no executor que a chamou:
+
+```swift
+nonisolated(nonsending)
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+Agora a função inteira corre no executor do chamador. Chama do MainActor, fica no MainActor. Chama de um actor personalizado, fica lá. O closure nunca cruza uma fronteira de isolamento, então não precisa de verificação Sendable.
+
+<div class="tip">
+<h4>Quando usar cada abordagem</h4>
+
+**`nonisolated(nonsending)`** - A escolha simples. Só adiciona o atributo. Usa quando só precisas de ficar no executor do chamador.
+
+**`isolation: isolated (any Actor)? = #isolation`** - A escolha explícita. Adiciona um parâmetro que dá acesso à instância do actor. Usa quando precisares de passar o contexto de isolamento para outras funções ou inspecionar em que actor estás.
+</div>
+
+Se precisares de acesso explícito ao actor, usa um parâmetro [`#isolation`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/expressions/#Isolation-Expression):
+
+```swift
+func measure<T>(
+    isolation: isolated (any Actor)? = #isolation,
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+Ambas as abordagens são essenciais para construir utilitários async que parecem naturais de usar. Sem elas, os chamadores precisariam tornar os seus closures `@Sendable` ou saltar obstáculos para satisfazer o compilador.
+
 <div class="analogy">
 <h4>Andar Pelo Edifício</h4>
 
@@ -729,8 +795,10 @@ struct ContentView: View {
 | `@MainActor` | Corre na thread principal |
 | `actor` | Tipo com estado mutável isolado |
 | `nonisolated` | Opta por sair do isolamento do actor |
+| `nonisolated(nonsending)` | Fica no executor do chamador |
 | `Sendable` | Seguro para passar entre domínios de isolamento |
 | `@concurrent` | Corre sempre em background (Swift 6.2+) |
+| `#isolation` | Captura o isolamento do chamador como parâmetro |
 | `async let` | Inicia trabalho paralelo |
 | `TaskGroup` | Trabalho paralelo dinâmico |
 

@@ -488,6 +488,72 @@ class ViewModel {
 [Task.detached يجب أن يكون ملاذك الأخير](https://forums.swift.org/t/revisiting-when-to-use-task-detached/57929). المهام المنفصلة لا ترث الأولوية، القيم المحلية للمهمة، أو سياق الـ actor. إذا كنت تحتاج عملاً مكثفاً على المعالج بعيداً عن الـ main actor، ضع علامة `@concurrent` على الدالة بدلاً من ذلك.
 </div>
 
+### الحفاظ على العزل في أدوات async
+
+أحياناً تكتب دالة async عامة تقبل closure - غلاف، مساعد إعادة المحاولة، نطاق معاملة. المستدعي يمرر closure، ودالتك تنفذها. بسيط، أليس كذلك؟
+
+```swift
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+لكن عندما تستدعي هذا من سياق `@MainActor`، Swift يشتكي:
+
+<div class="compiler-error">
+Sending value of non-Sendable type '() async throws -> T' risks causing data races
+</div>
+
+ماذا يحدث؟ الـ closure الخاص بك يلتقط حالة من MainActor، لكن `measure` هي `nonisolated`. Swift يرى closure غير Sendable يعبر حدود العزل - بالضبط ما صُمم لمنعه.
+
+الحل الأبسط هو `nonisolated(nonsending)`. هذا يخبر Swift أن الدالة يجب أن تبقى على أي منفذ استدعاها:
+
+```swift
+nonisolated(nonsending)
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+الآن الدالة بأكملها تعمل على منفذ المستدعي. استدعها من MainActor، تبقى على MainActor. استدعها من actor مخصص، تبقى هناك. الـ closure لا يعبر حدود العزل أبداً، لذا لا حاجة لفحص Sendable.
+
+<div class="tip">
+<h4>متى تستخدم كل نهج</h4>
+
+**`nonisolated(nonsending)`** - الخيار البسيط. فقط أضف السمة. استخدمه عندما تحتاج فقط البقاء على منفذ المستدعي.
+
+**`isolation: isolated (any Actor)? = #isolation`** - الخيار الصريح. يضيف معاملاً يعطيك الوصول لمثيل الـ actor. استخدمه عندما تحتاج تمرير سياق العزل لدوال أخرى أو فحص أي actor أنت عليه.
+</div>
+
+إذا كنت تحتاج وصولاً صريحاً للـ actor، استخدم معامل [`#isolation`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/expressions/#Isolation-Expression) بدلاً من ذلك:
+
+```swift
+func measure<T>(
+    isolation: isolated (any Actor)? = #isolation,
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+كلا النهجين ضروريان لبناء أدوات async تبدو طبيعية عند الاستخدام. بدونهما، سيحتاج المستدعون لجعل closures الخاصة بهم `@Sendable` أو القفز عبر حلقات لإرضاء المترجم.
+
 <div class="analogy">
 <h4>المشي عبر المبنى</h4>
 
@@ -729,8 +795,10 @@ struct ContentView: View {
 | `@MainActor` | يعمل على الخيط الرئيسي |
 | `actor` | نوع بحالة قابلة للتغيير معزولة |
 | `nonisolated` | يخرج من عزل الـ actor |
+| `nonisolated(nonsending)` | البقاء على منفذ المستدعي |
 | `Sendable` | آمن للتمرير بين نطاقات العزل |
 | `@concurrent` | دائماً يعمل في الخلفية (Swift 6.2+) |
+| `#isolation` | التقاط عزل المستدعي كمعامل |
 | `async let` | ابدأ عملاً متوازياً |
 | `TaskGroup` | عمل متوازي ديناميكي |
 
