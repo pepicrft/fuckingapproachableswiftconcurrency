@@ -488,6 +488,72 @@ class ViewModel {
 Swift geliştiricileri, [Task.detached kullanımını son çare olarak önermektedir](https://forums.swift.org/t/revisiting-when-to-use-task-detached/57929). Bu yapı; task priority'lerini, task-local value'larını veya actor izolasyonunu devralmaz. Çoğu zaman ihtiyacınız olan şey standart `Task` kullanımıdır. Eğer main actor dışında CPU yoğunluklu bir iş yapmanız gerekiyorsa, ilgili fonksiyonu `@concurrent`  ile işaretlemek en doğru seçim olacaktır.
 </div>
 
+### Async Yardımcılarda İzolasyonu Korumak
+
+Bazen closure kabul eden jenerik bir async fonksiyon yazarsınız - bir wrapper, retry helper, transaction scope. Çağıran closure'ı iletir, fonksiyonunuz onu çalıştırır. Basit, değil mi?
+
+```swift
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+Ancak bunu bir `@MainActor` bağlamından çağırdığınızda, Swift şikayet eder:
+
+<div class="compiler-error">
+Sending value of non-Sendable type '() async throws -> T' risks causing data races
+</div>
+
+Ne oluyor? Closure'ınız MainActor'dan durum yakalar, ama `measure` `nonisolated`. Swift, Sendable olmayan bir closure'ın izolasyon sınırını geçtiğini görür - tam olarak önlemek için tasarlandığı şey.
+
+En basit çözüm `nonisolated(nonsending)`'dir. Bu, Swift'e fonksiyonun kendisini çağıran executor üzerinde kalması gerektiğini söyler:
+
+```swift
+nonisolated(nonsending)
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+Artık fonksiyonun tamamı çağıranın executor'ında çalışır. MainActor'dan çağırın, MainActor'da kalır. Özel bir actor'dan çağırın, orada kalır. Closure asla izolasyon sınırını geçmez, bu yüzden Sendable kontrolü gerekmez.
+
+<div class="tip">
+<h4>Hangi yaklaşımı ne zaman kullanmalı</h4>
+
+**`nonisolated(nonsending)`** - Basit seçenek. Sadece attribute'u ekleyin. Çağıranın executor'ında kalmak istediğinizde bunu kullanın.
+
+**`isolation: isolated (any Actor)? = #isolation`** - Açık seçenek. Actor instance'ına erişim sağlayan bir parametre ekler. İzolasyon bağlamını başka fonksiyonlara aktarmanız veya hangi actor üzerinde olduğunuzu incelemeniz gerektiğinde bunu kullanın.
+</div>
+
+Eğer actor'e açık erişime ihtiyacınız varsa, bunun yerine bir [`#isolation`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/expressions/#Isolation-Expression) parametresi kullanın:
+
+```swift
+func measure<T>(
+    isolation: isolated (any Actor)? = #isolation,
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+Her iki yaklaşım da doğal kullanılan async araçlar oluşturmak için gereklidir. Bunlar olmadan, çağıranların closure'larını `@Sendable` yapması veya compiler'ı tatmin etmek için çemberlerden atlaması gerekirdi.
+
 <div class="analogy">
 <h4>Ofis Binasında Yürüyüşe Çıkmak</h4>
 
@@ -664,8 +730,10 @@ Eğer zaten asenkron bir bağlamdaysanız, yeni unstructured `Task`'lar oluştur
 | `@MainActor` | Kodun main thread üzerinde çalışmasını sağlar. |
 | `actor` | Kendini izole etmiş ve mutable state'e sahip tip. |
 | `nonisolated` | Bir kod parçasını actor izolasyonunun dışına çıkarır. |
+| `nonisolated(nonsending)` | Çağıranın executor'ında kalır. |
 | `Sendable` | İzolasyon alanları arasında güvenle taşınabilen tipler. |
 | `@concurrent` | Her zaman background thread'de çalıştırır (Swift 6.2+). |
+| `#isolation` | Çağıranın izolasyonunu parametre olarak yakalar. |
 | `async let` | Paralel iş başlatır. |
 | `TaskGroup` | Dinamik sayıda paralel işi yönetmek için kullanılır. |
 

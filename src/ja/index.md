@@ -488,6 +488,72 @@ class ViewModel {
 [Task.detached は最後の手段であるべき](https://forums.swift.org/t/revisiting-when-to-use-task-detached/57929)。デタッチされたタスクは優先度、タスクローカル値、アクターコンテキストを継承しない。メインアクターから外れた CPU 集約的な作業が必要なら、代わりに関数を `@concurrent` でマークしよう。
 </div>
 
+### Async ユーティリティでの分離の保持
+
+クロージャを受け取るジェネリックな async 関数を書くことがある - ラッパー、リトライヘルパー、トランザクションスコープ。呼び出し元がクロージャを渡し、関数がそれを実行する。シンプルだよね？
+
+```swift
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+でも `@MainActor` コンテキストからこれを呼び出すと、Swift が文句を言う:
+
+<div class="compiler-error">
+Sending value of non-Sendable type '() async throws -> T' risks causing data races
+</div>
+
+何が起きている？クロージャは MainActor の状態をキャプチャしているが、`measure` は `nonisolated` だ。Swift は非 Sendable なクロージャが分離境界を越えようとしているのを見ている - まさに防ぐように設計されていることだ。
+
+最もシンプルな修正は `nonisolated(nonsending)` だ。これは関数を呼び出し元のエクゼキュータに留まらせる:
+
+```swift
+nonisolated(nonsending)
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+これで関数全体が呼び出し元のエクゼキュータで実行される。MainActor から呼べば MainActor に留まる。カスタムアクターから呼べばそこに留まる。クロージャは分離境界を越えないので、Sendable チェックは不要だ。
+
+<div class="tip">
+<h4>どちらを使うべきか</h4>
+
+**`nonisolated(nonsending)`** - シンプルな選択。属性を追加するだけ。呼び出し元のエクゼキュータに留まりたいだけならこれを使う。
+
+**`isolation: isolated (any Actor)? = #isolation`** - 明示的な選択。アクターインスタンスにアクセスできるパラメータを追加する。分離コンテキストを他の関数に渡したり、どのアクターにいるか調べたりする必要があるときに使う。
+</div>
+
+明示的にアクターにアクセスする必要がある場合は、代わりに [`#isolation`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/expressions/#Isolation-Expression) パラメータを使う:
+
+```swift
+func measure<T>(
+    isolation: isolated (any Actor)? = #isolation,
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+どちらのアプローチも、自然に使える async ユーティリティを作るのに不可欠だ。これがないと、呼び出し元はクロージャを `@Sendable` にするか、コンパイラを満足させるために複雑なことをする必要がある。
+
 <div class="analogy">
 <h4>ビルを歩く</h4>
 
@@ -729,8 +795,10 @@ struct ContentView: View {
 | `@MainActor` | メインスレッドで実行 |
 | `actor` | 分離された可変状態を持つ型 |
 | `nonisolated` | アクター分離をオプトアウト |
+| `nonisolated(nonsending)` | 呼び出し元のエクゼキュータに留まる |
 | `Sendable` | 分離ドメイン間で渡しても安全 |
 | `@concurrent` | 常にバックグラウンドで実行（Swift 6.2+） |
+| `#isolation` | 呼び出し元の分離をパラメータとしてキャプチャ |
 | `async let` | 並列作業を開始 |
 | `TaskGroup` | 動的な並列作業 |
 
