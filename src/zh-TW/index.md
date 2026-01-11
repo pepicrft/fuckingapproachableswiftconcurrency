@@ -488,6 +488,72 @@ class ViewModel {
 [Task.detached 應該是你的最後手段](https://forums.swift.org/t/revisiting-when-to-use-task-detached/57929)。分離的任務不繼承優先級、task-local 值或 actor 上下文。如果你需要在主 actor 外進行 CPU 密集型工作，改為把函式標記為 `@concurrent`。
 </div>
 
+### 在 Async 工具中保持隔離
+
+有時你會寫一個接受閉包的泛型 async 函式——包裝器、重試輔助程式、交易作用域。呼叫者傳入閉包，你的函式執行它。很簡單，對吧？
+
+```swift
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+但當你從 `@MainActor` 上下文呼叫它時，Swift 會抱怨：
+
+<div class="compiler-error">
+Sending value of non-Sendable type '() async throws -> T' risks causing data races
+</div>
+
+發生了什麼？你的閉包捕獲了 MainActor 的狀態，但 `measure` 是 `nonisolated` 的。Swift 看到一個非 Sendable 的閉包正在跨越隔離邊界——這正是它設計來防止的。
+
+最簡單的解決方案是 `nonisolated(nonsending)`。它告訴 Swift 函式應該留在呼叫它的執行器上：
+
+```swift
+nonisolated(nonsending)
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+現在整個函式在呼叫者的執行器上執行。從 MainActor 呼叫，它就留在 MainActor 上。從自訂 actor 呼叫，它就留在那裡。閉包從不跨越隔離邊界，所以不需要 Sendable 檢查。
+
+<div class="tip">
+<h4>何時使用哪種方法</h4>
+
+**`nonisolated(nonsending)`** - 簡單的選擇。只需添加屬性。當你只需要留在呼叫者的執行器上時使用。
+
+**`isolation: isolated (any Actor)? = #isolation`** - 顯式的選擇。添加一個參數，讓你可以存取 actor 實例。當你需要將隔離上下文傳遞給其他函式或檢查你在哪個 actor 上時使用。
+</div>
+
+如果你確實需要顯式存取 actor，使用 [`#isolation`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/expressions/#Isolation-Expression) 參數：
+
+```swift
+func measure<T>(
+    isolation: isolated (any Actor)? = #isolation,
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+這兩種方法對於建構使用起來自然的 async 工具都是必不可少的。沒有它們，呼叫者需要讓他們的閉包成為 `@Sendable` 或者費盡周折來滿足編譯器。
+
 <div class="analogy">
 <h4>走過大樓</h4>
 
@@ -729,8 +795,10 @@ struct ContentView: View {
 | `@MainActor` | 在主執行緒上執行 |
 | `actor` | 有隔離可變狀態的類型 |
 | `nonisolated` | 選擇退出 actor 隔離 |
+| `nonisolated(nonsending)` | 保持在呼叫者的執行器上 |
 | `Sendable` | 可以在隔離域之間安全傳遞 |
 | `@concurrent` | 永遠在背景執行（Swift 6.2+） |
+| `#isolation` | 將呼叫者的隔離捕獲為參數 |
 | `async let` | 開始並行工作 |
 | `TaskGroup` | 動態並行工作 |
 

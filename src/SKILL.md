@@ -153,6 +153,31 @@ With Approachable Concurrency, isolation flows from MainActor through your code:
 - **Task { }**: Inherits actor isolation from creation site
 - **Task.detached { }**: No inheritance (rarely needed)
 
+### Preserving Isolation in Async Utilities
+
+When writing generic async functions that accept closures, you need to preserve the caller's isolation to avoid Sendable errors.
+
+**Option 1: `nonisolated(nonsending)`** (simpler)
+
+```swift
+// Stays on caller's executor, no Sendable needed
+nonisolated(nonsending)
+func measure<T>(_ label: String, block: () async throws -> T) async rethrows -> T
+```
+
+**Option 2: `#isolation` parameter** (when you need actor access)
+
+```swift
+// Explicit isolation parameter, useful if you need to pass it around
+func measure<T>(
+    isolation: isolated (any Actor)? = #isolation,
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T
+```
+
+Use `nonisolated(nonsending)` by default. Use `#isolation` when you need explicit access to the actor instance.
+
 ## Common Mistakes to Avoid
 
 ### 1. Thinking async = background
@@ -211,8 +236,10 @@ await (users, posts)
 | `@MainActor` | Runs on main thread |
 | `actor` | Type with isolated mutable state |
 | `nonisolated` | Opts out of actor isolation |
+| `nonisolated(nonsending)` | Stay on caller's executor |
 | `Sendable` | Safe to pass between isolation domains |
 | `@concurrent` | Always run on background (Swift 6.2+) |
+| `#isolation` | Capture caller's isolation as parameter |
 | `async let` | Start parallel work |
 | `TaskGroup` | Dynamic parallel work |
 

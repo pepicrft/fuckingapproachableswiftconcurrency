@@ -488,6 +488,72 @@ class ViewModel {
 [Task.detached는 최후의 수단이어야 합니다](https://forums.swift.org/t/revisiting-when-to-use-task-detached/57929). 분리된 태스크는 우선순위, task-local 값, 액터 컨텍스트를 상속하지 않습니다. 메인 액터에서 벗어난 CPU 집약적 작업이 필요하면 함수를 `@concurrent`로 표시하세요.
 </div>
 
+### Async 유틸리티에서 격리 보존
+
+가끔 클로저를 받는 제네릭 async 함수를 작성합니다 - 래퍼, 재시도 헬퍼, 트랜잭션 스코프. 호출자가 클로저를 전달하고, 함수가 실행합니다. 간단하죠?
+
+```swift
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+하지만 `@MainActor` 컨텍스트에서 이것을 호출하면, Swift가 불평합니다:
+
+<div class="compiler-error">
+Sending value of non-Sendable type '() async throws -> T' risks causing data races
+</div>
+
+무슨 일이죠? 클로저가 MainActor의 상태를 캡처하지만, `measure`는 `nonisolated`입니다. Swift는 non-Sendable 클로저가 격리 경계를 넘는 것을 봅니다 - 정확히 방지하도록 설계된 것입니다.
+
+가장 간단한 해결책은 `nonisolated(nonsending)`입니다. 이것은 Swift에게 함수가 호출한 executor에 머물러야 한다고 알려줍니다:
+
+```swift
+nonisolated(nonsending)
+func measure<T>(
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+이제 전체 함수가 호출자의 executor에서 실행됩니다. MainActor에서 호출하면 MainActor에 머뭅니다. 커스텀 액터에서 호출하면 거기에 머뭅니다. 클로저가 격리 경계를 넘지 않아서 Sendable 검사가 필요 없습니다.
+
+<div class="tip">
+<h4>각 접근 방식을 사용할 때</h4>
+
+**`nonisolated(nonsending)`** - 간단한 선택. 속성만 추가하면 됩니다. 호출자의 executor에 머물기만 하면 될 때 사용하세요.
+
+**`isolation: isolated (any Actor)? = #isolation`** - 명시적인 선택. 액터 인스턴스에 접근할 수 있는 매개변수를 추가합니다. 격리 컨텍스트를 다른 함수에 전달하거나 어떤 액터에 있는지 검사해야 할 때 사용하세요.
+</div>
+
+액터에 대한 명시적인 접근이 필요하면 [`#isolation`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/expressions/#Isolation-Expression) 매개변수를 대신 사용하세요:
+
+```swift
+func measure<T>(
+    isolation: isolated (any Actor)? = #isolation,
+    _ label: String,
+    block: () async throws -> T
+) async rethrows -> T {
+    let start = ContinuousClock.now
+    let result = try await block()
+    print("\(label): \(ContinuousClock.now - start)")
+    return result
+}
+```
+
+두 접근 방식 모두 자연스럽게 사용할 수 있는 async 유틸리티를 만드는 데 필수적입니다. 없으면 호출자가 클로저를 `@Sendable`로 만들거나 컴파일러를 만족시키기 위해 복잡한 작업을 해야 합니다.
+
 <div class="analogy">
 <h4>건물 안에서 걷기</h4>
 
@@ -729,8 +795,10 @@ struct ContentView: View {
 | `@MainActor` | 메인 스레드에서 실행 |
 | `actor` | 격리된 가변 상태를 가진 타입 |
 | `nonisolated` | 액터 격리에서 옵트 아웃 |
+| `nonisolated(nonsending)` | 호출자의 executor에 머무름 |
 | `Sendable` | 격리 도메인 간에 안전하게 전달 가능 |
 | `@concurrent` | 항상 백그라운드에서 실행 (Swift 6.2+) |
+| `#isolation` | 호출자의 격리를 매개변수로 캡처 |
 | `async let` | 병렬 작업 시작 |
 | `TaskGroup` | 동적 병렬 작업 |
 
