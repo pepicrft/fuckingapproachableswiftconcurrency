@@ -843,7 +843,9 @@ struct ContentView: View {
 
 هل تريد أن يفهم مساعد البرمجة بالذكاء الاصطناعي Swift Concurrency؟ نقدم ملف **[SKILL.md](/SKILL.md)** الذي يحزم هذه النماذج الذهنية لوكلاء الذكاء الاصطناعي مثل Claude Code و Codex و Amp و OpenCode وغيرها.
 
-يمكنك أيضاً الاطلاع على مهارة Swift Concurrency Agent مفتوحة المصدر من Antoine على <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-agent-skill</a>.
+### مهارات أخرى
+
+- <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">مهارة Swift Concurrency Agent مفتوحة المصدر من Antoine</a>
 
 <div class="tip">
 <h4>ما هي المهارة؟</h4>

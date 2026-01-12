@@ -778,7 +778,9 @@ Eğer zaten asenkron bir bağlamdaysanız, yeni unstructured `Task`'lar oluştur
 
 Yapay zeka kodlama asistanınızın Swift Concurrency mantığını kavramasını mı istiyorsunuz? Bu mental modelleri; Claude Code, Codex, Amp, OpenCode ve diğer AI ajanları için paketlenmiş bir **[SKILL.md](/SKILL.md)** dosyası olarak sunuyoruz.
 
-Ayrıca Antoine'ın açık kaynak Swift Concurrency Agent Skill'ine <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-agent-skill</a> adresinden göz atabilirsiniz.
+### Diğer yetenekler
+
+- <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">Antoine'ın açık kaynak Swift Concurrency Agent Skill'i</a>
 
 <div class="tip">
 <h4>Yetenek nedir?</h4>
