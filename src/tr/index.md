@@ -26,16 +26,6 @@ footer:
   </div>
 </section>
 
-<section id="agent-skill">
-  <div class="container">
-
-## [Swift Concurrency için Agent Skill](#agent-skill)
-
-SwiftLee ile tanınan Antoine van der Lee, 70+ dersten oluşan <a href="https://www.swiftconcurrencycourse.com" target="_blank" rel="noreferrer noopener">derinlemesine kursunu</a> temel alarak Swift Concurrency için bir Agent Skill hazırladı. Açık kaynak ve <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-skill</a> adresinde ücretsiz.
-
-  </div>
-</section>
-
 <section id="async-await">
   <div class="container">
 
@@ -787,6 +777,8 @@ Eğer zaten asenkron bir bağlamdaysanız, yeni unstructured `Task`'lar oluştur
 ## [AI Agent Yeteneği](#ai-skill)
 
 Yapay zeka kodlama asistanınızın Swift Concurrency mantığını kavramasını mı istiyorsunuz? Bu mental modelleri; Claude Code, Codex, Amp, OpenCode ve diğer AI ajanları için paketlenmiş bir **[SKILL.md](/SKILL.md)** dosyası olarak sunuyoruz.
+
+Ayrıca Antoine'ın açık kaynak Swift Concurrency Agent Skill'ine <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-agent-skill</a> adresinden göz atabilirsiniz.
 
 <div class="tip">
 <h4>Yetenek nedir?</h4>

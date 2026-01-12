@@ -26,16 +26,6 @@ footer:
   </div>
 </section>
 
-<section id="agent-skill">
-  <div class="container">
-
-## [Swift Concurrency 用エージェントスキル](#agent-skill)
-
-SwiftLee で知られる Antoine van der Lee が、70 以上のレッスンからなる <a href="https://www.swiftconcurrencycourse.com" target="_blank" rel="noreferrer noopener">詳細コース</a>を基に Swift Concurrency 向けのエージェントスキルを作りました。オープンソースで、<a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-skill</a> から無料で利用できます。
-
-  </div>
-</section>
-
 <section id="async-await">
   <div class="container">
 
@@ -852,6 +842,8 @@ struct ContentView: View {
 ## [AI エージェントスキル](#ai-skill)
 
 AI コーディングアシスタントに Swift Concurrency を理解させたいですか？Claude Code、Codex、Amp、OpenCode などの AI エージェント向けに、これらのメンタルモデルをパッケージ化した **[SKILL.md](/SKILL.md)** ファイルを提供しています。
+
+また、Antoine がオープンソースで公開している Swift Concurrency Agent Skill を <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-agent-skill</a> で確認できます。
 
 <div class="tip">
 <h4>スキルとは？</h4>

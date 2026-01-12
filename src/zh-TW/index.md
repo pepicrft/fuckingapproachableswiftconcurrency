@@ -26,16 +26,6 @@ footer:
   </div>
 </section>
 
-<section id="agent-skill">
-  <div class="container">
-
-## [Swift 並發 Agent Skill](#agent-skill)
-
-以 SwiftLee 著稱的 Antoine van der Lee 基於他包含 70+ 課的<a href="https://www.swiftconcurrencycourse.com" target="_blank" rel="noreferrer noopener">深入課程</a>製作了 Swift 並發的 Agent Skill。開源且免費提供，詳見 <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-skill</a>。
-
-  </div>
-</section>
-
 <section id="async-await">
   <div class="container">
 
@@ -852,6 +842,8 @@ struct ContentView: View {
 ## [AI 代理技能](#ai-skill)
 
 想讓你的 AI 程式碼助手理解 Swift Concurrency？我們提供一個 **[SKILL.md](/SKILL.md)** 檔案，為 Claude Code、Codex、Amp、OpenCode 等 AI 代理打包了這些心智模型。
+
+另外，你可以在 <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-agent-skill</a> 查看 Antoine 開源的 Swift Concurrency Agent Skill。
 
 <div class="tip">
 <h4>什麼是技能？</h4>

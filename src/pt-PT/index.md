@@ -26,16 +26,6 @@ footer:
   </div>
 </section>
 
-<section id="agent-skill">
-  <div class="container">
-
-## [Skill de Agente para Swift Concurrency](#agent-skill)
-
-Antoine van der Lee, conhecido pelo SwiftLee, criou uma Agent Skill para Swift Concurrency baseada nas 70+ aulas do seu <a href="https://www.swiftconcurrencycourse.com" target="_blank" rel="noreferrer noopener">curso aprofundado</a>. É open source e gratuita em <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-skill</a>.
-
-  </div>
-</section>
-
 <section id="async-await">
   <div class="container">
 
@@ -852,6 +842,8 @@ struct ContentView: View {
 ## [Skill para Agentes IA](#ai-skill)
 
 Queres que o teu assistente de código IA compreenda Swift Concurrency? Fornecemos um ficheiro **[SKILL.md](/SKILL.md)** que empacota estes modelos mentais para agentes IA como Claude Code, Codex, Amp, OpenCode e outros.
+
+Além disso, podes consultar o Swift Concurrency Agent Skill open source do Antoine em <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-agent-skill</a>.
 
 <div class="tip">
 <h4>O que é um Skill?</h4>

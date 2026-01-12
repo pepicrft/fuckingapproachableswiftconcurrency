@@ -26,16 +26,6 @@ footer:
   </div>
 </section>
 
-<section id="agent-skill">
-  <div class="container">
-
-## [Навык агента для Swift Concurrency](#agent-skill)
-
-Antoine van der Lee, известный по SwiftLee, подготовил Agent Skill для Swift Concurrency на основе 70+ уроков своего <a href="https://www.swiftconcurrencycourse.com" target="_blank" rel="noreferrer noopener">углубленного курса</a>. Проект с открытым исходным кодом и бесплатный на <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-skill</a>.
-
-  </div>
-</section>
-
 <section id="async-await">
   <div class="container">
 
@@ -852,6 +842,8 @@ struct ContentView: View {
 ## [Навык для ИИ-агентов](#ai-skill)
 
 Хотите, чтобы ваш ИИ-помощник по коду понимал Swift Concurrency? Мы предоставляем файл **[SKILL.md](/SKILL.md)**, который упаковывает эти ментальные модели для ИИ-агентов, таких как Claude Code, Codex, Amp, OpenCode и других.
+
+Кроме того, можно посмотреть открытый Swift Concurrency Agent Skill Антуана на <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-agent-skill</a>.
 
 <div class="tip">
 <h4>Что такое навык?</h4>

@@ -26,16 +26,6 @@ footer:
   </div>
 </section>
 
-<section id="agent-skill">
-  <div class="container">
-
-## [Swift 동시성 에이전트 스킬](#agent-skill)
-
-SwiftLee로 알려진 Antoine van der Lee가 70개 이상의 강의로 구성된 <a href="https://www.swiftconcurrencycourse.com" target="_blank" rel="noreferrer noopener">심층 과정</a>을 바탕으로 Swift 동시성을 위한 에이전트 스킬을 만들었습니다. 오픈 소스이며 <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-skill</a>에서 무료로 이용할 수 있습니다.
-
-  </div>
-</section>
-
 <section id="async-await">
   <div class="container">
 
@@ -852,6 +842,8 @@ struct ContentView: View {
 ## [AI 에이전트 스킬](#ai-skill)
 
 AI 코딩 어시스턴트가 Swift Concurrency를 이해하길 원하시나요? Claude Code, Codex, Amp, OpenCode 등의 AI 에이전트를 위해 이러한 멘탈 모델을 패키징한 **[SKILL.md](/SKILL.md)** 파일을 제공합니다.
+
+추가로 Antoine이 오픈 소스로 공개한 Swift Concurrency Agent Skill을 <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-agent-skill</a>에서 확인할 수 있습니다.
 
 <div class="tip">
 <h4>스킬이란?</h4>
