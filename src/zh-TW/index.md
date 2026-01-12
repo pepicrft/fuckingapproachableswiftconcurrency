@@ -843,6 +843,10 @@ struct ContentView: View {
 
 想讓你的 AI 程式碼助手理解 Swift Concurrency？我們提供一個 **[SKILL.md](/SKILL.md)** 檔案，為 Claude Code、Codex、Amp、OpenCode 等 AI 代理打包了這些心智模型。
 
+### 其他技能
+
+- <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">Antoine 開源的 Swift Concurrency Agent Skill</a>
+
 <div class="tip">
 <h4>什麼是技能？</h4>
 

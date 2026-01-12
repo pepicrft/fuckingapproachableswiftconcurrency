@@ -843,6 +843,10 @@ struct ContentView: View {
 
 AI 코딩 어시스턴트가 Swift Concurrency를 이해하길 원하시나요? Claude Code, Codex, Amp, OpenCode 등의 AI 에이전트를 위해 이러한 멘탈 모델을 패키징한 **[SKILL.md](/SKILL.md)** 파일을 제공합니다.
 
+### 다른 스킬
+
+- <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">Antoine이 오픈 소스로 공개한 Swift Concurrency Agent Skill</a>
+
 <div class="tip">
 <h4>스킬이란?</h4>
 
