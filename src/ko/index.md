@@ -26,6 +26,16 @@ footer:
   </div>
 </section>
 
+<section id="agent-skill">
+  <div class="container">
+
+## [Swift 동시성 에이전트 스킬](#agent-skill)
+
+SwiftLee로 알려진 Antoine van der Lee가 70개 이상의 강의로 구성된 <a href="https://www.swiftconcurrencycourse.com" target="_blank" rel="noreferrer noopener">심층 과정</a>을 바탕으로 Swift 동시성을 위한 에이전트 스킬을 만들었습니다. 오픈 소스이며 <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-skill</a>에서 무료로 이용할 수 있습니다.
+
+  </div>
+</section>
+
 <section id="async-await">
   <div class="container">
 

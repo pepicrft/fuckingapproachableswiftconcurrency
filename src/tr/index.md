@@ -26,6 +26,16 @@ footer:
   </div>
 </section>
 
+<section id="agent-skill">
+  <div class="container">
+
+## [Swift Concurrency için Agent Skill](#agent-skill)
+
+SwiftLee ile tanınan Antoine van der Lee, 70+ dersten oluşan <a href="https://www.swiftconcurrencycourse.com" target="_blank" rel="noreferrer noopener">derinlemesine kursunu</a> temel alarak Swift Concurrency için bir Agent Skill hazırladı. Açık kaynak ve <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-skill</a> adresinde ücretsiz.
+
+  </div>
+</section>
+
 <section id="async-await">
   <div class="container">
 

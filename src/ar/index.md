@@ -26,6 +26,16 @@ footer:
   </div>
 </section>
 
+<section id="agent-skill">
+  <div class="container">
+
+## [مهارة Agent لتزامن Swift](#agent-skill)
+
+أنطوان فان دير لي، المعروف من SwiftLee، أعد مهارة Agent لتزامن Swift بالاعتماد على أكثر من 70 درساً في <a href="https://www.swiftconcurrencycourse.com" target="_blank" rel="noreferrer noopener">دورته المتعمقة</a>. مفتوحة المصدر ومجانية تماماً على <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-skill</a>.
+
+  </div>
+</section>
+
 <section id="async-await">
   <div class="container">
 

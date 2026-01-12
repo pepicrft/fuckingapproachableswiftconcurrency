@@ -26,6 +26,16 @@ footer:
   </div>
 </section>
 
+<section id="agent-skill">
+  <div class="container">
+
+## [Swift 並發 Agent Skill](#agent-skill)
+
+以 SwiftLee 著稱的 Antoine van der Lee 基於他包含 70+ 課的<a href="https://www.swiftconcurrencycourse.com" target="_blank" rel="noreferrer noopener">深入課程</a>製作了 Swift 並發的 Agent Skill。開源且免費提供，詳見 <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-skill</a>。
+
+  </div>
+</section>
+
 <section id="async-await">
   <div class="container">
 

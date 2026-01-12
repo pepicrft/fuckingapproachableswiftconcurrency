@@ -26,6 +26,16 @@ footer:
   </div>
 </section>
 
+<section id="agent-skill">
+  <div class="container">
+
+## [Навык агента для Swift Concurrency](#agent-skill)
+
+Antoine van der Lee, известный по SwiftLee, подготовил Agent Skill для Swift Concurrency на основе 70+ уроков своего <a href="https://www.swiftconcurrencycourse.com" target="_blank" rel="noreferrer noopener">углубленного курса</a>. Проект с открытым исходным кодом и бесплатный на <a href="https://github.com/AvdLee/Swift-Concurrency-Agent-Skill" target="_blank" rel="noreferrer noopener">github.com/avdlee/swift-concurrency-skill</a>.
+
+  </div>
+</section>
+
 <section id="async-await">
   <div class="container">
 
