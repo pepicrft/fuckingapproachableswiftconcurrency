@@ -22,7 +22,7 @@ footer:
   <div class="container">
     <h1>دليل سهل جداً<br><span class="accent">لتزامن Swift</span></h1>
     <p class="subtitle">افهم أخيراً async/await والمهام ولماذا المترجم يصرخ عليك.</p>
-    <p class="credit">شكر كبير لـ <a href="https://www.massicotte.org/">Matt Massicotte</a> لجعل تزامن Swift مفهوماً. من إعداد <a href="https://pepicrft.me">Pedro Piñera</a>، مؤسس مشارك لـ <a href="https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=author">Tuist</a>. وجدت مشكلة؟ <a href="https://github.com/pepicrft/fuckingapproachableswiftconcurrency/issues/new">افتح issue</a> أو <a href="https://github.com/pepicrft/fuckingapproachableswiftconcurrency/pulls">أرسل PR</a>.</p>
+    <p class="credit">شكر كبير لـ <a href="https://www.massicotte.org/">Matt Massicotte</a> لجعل تزامن Swift مفهوماً. من إعداد <a href="https://pepicrft.me">Pedro Piñera</a>، مؤسس مشارك لـ <a href="https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=author">Tuist</a>. وجدت مشكلة؟ <a href="https://github.com/tuist/fuckingapproachableswiftconcurrency/issues/new">افتح issue</a> أو <a href="https://github.com/tuist/fuckingapproachableswiftconcurrency/pulls">أرسل PR</a>.</p>
   </div>
 </section>
 

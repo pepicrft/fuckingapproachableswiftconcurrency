@@ -22,7 +22,7 @@ footer:
   <div class="container">
     <h1>Jodidamente Accesible<br><span class="accent">Swift Concurrency</span></h1>
     <p class="subtitle">Por fin entiende async/await, Tasks, y por qué el compilador no para de gritarte.</p>
-    <p class="credit">Enorme agradecimiento a <a href="https://www.massicotte.org/">Matt Massicotte</a> por hacer comprensible la concurrencia en Swift. Recopilado por <a href="https://pepicrft.me">Pedro Piñera</a>, co-fundador de <a href="https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=author">Tuist</a>. ¿Encontraste un error? <a href="https://github.com/pepicrft/fuckingapproachableswiftconcurrency/issues/new">Abre un issue</a> o <a href="https://github.com/pepicrft/fuckingapproachableswiftconcurrency/pulls">envía un PR</a>.</p>
+    <p class="credit">Enorme agradecimiento a <a href="https://www.massicotte.org/">Matt Massicotte</a> por hacer comprensible la concurrencia en Swift. Recopilado por <a href="https://pepicrft.me">Pedro Piñera</a>, co-fundador de <a href="https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=author">Tuist</a>. ¿Encontraste un error? <a href="https://github.com/tuist/fuckingapproachableswiftconcurrency/issues/new">Abre un issue</a> o <a href="https://github.com/tuist/fuckingapproachableswiftconcurrency/pulls">envía un PR</a>.</p>
   </div>
 </section>
 

@@ -22,7 +22,7 @@ footer:
   <div class="container">
     <h1>빌어먹게 쉬운<br><span class="accent">Swift 동시성</span></h1>
     <p class="subtitle">드디어 async/await, Tasks, 그리고 왜 컴파일러가 계속 소리 지르는지 이해하세요.</p>
-    <p class="credit"><a href="https://www.massicotte.org/">Matt Massicotte</a>에게 큰 감사를 드립니다. Swift 동시성을 이해할 수 있게 만들어주셨습니다. <a href="https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=author">Tuist</a>의 공동 창립자 <a href="https://pepicrft.me">Pedro Piñera</a>가 정리했습니다. 오류를 발견하셨나요? <a href="https://github.com/pepicrft/fuckingapproachableswiftconcurrency/issues/new">이슈 열기</a> 또는 <a href="https://github.com/pepicrft/fuckingapproachableswiftconcurrency/pulls">PR 제출</a>.</p>
+    <p class="credit"><a href="https://www.massicotte.org/">Matt Massicotte</a>에게 큰 감사를 드립니다. Swift 동시성을 이해할 수 있게 만들어주셨습니다. <a href="https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=author">Tuist</a>의 공동 창립자 <a href="https://pepicrft.me">Pedro Piñera</a>가 정리했습니다. 오류를 발견하셨나요? <a href="https://github.com/tuist/fuckingapproachableswiftconcurrency/issues/new">이슈 열기</a> 또는 <a href="https://github.com/tuist/fuckingapproachableswiftconcurrency/pulls">PR 제출</a>.</p>
   </div>
 </section>
 

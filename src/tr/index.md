@@ -22,7 +22,7 @@ footer:
   <div class="container">
     <h1>Kahrolası<br><span class="accent">Swift Concurrency</span></h1>
     <p class="subtitle">Artık async/await’i, Task’leri ve Compiler’ın sana neden durmadan bağırdığını anla.</p>
-    <p class="credit">Swift Concurrency’yi anlaşılır hâle getirdiği için <a href="https://www.massicotte.org/">Matt Massicotte’a </a> büyük teşekkürler. Hazırlayan: <a href="https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=author">Tuist'in kurucu ortağı</a> <a href="https://pepicrft.me">Pedro Piñera</a>. Bir hata görürseniz: <a href="https://github.com/pepicrft/fuckingapproachableswiftconcurrency/issues/new">Bir issue</a> ya da <a href="https://github.com/pepicrft/fuckingapproachableswiftconcurrency/pulls">PR oluşturun</a>.</p>
+    <p class="credit">Swift Concurrency’yi anlaşılır hâle getirdiği için <a href="https://www.massicotte.org/">Matt Massicotte’a </a> büyük teşekkürler. Hazırlayan: <a href="https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=author">Tuist'in kurucu ortağı</a> <a href="https://pepicrft.me">Pedro Piñera</a>. Bir hata görürseniz: <a href="https://github.com/tuist/fuckingapproachableswiftconcurrency/issues/new">Bir issue</a> ya da <a href="https://github.com/tuist/fuckingapproachableswiftconcurrency/pulls">PR oluşturun</a>.</p>
   </div>
 </section>
 

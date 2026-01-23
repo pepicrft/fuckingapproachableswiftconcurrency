@@ -22,7 +22,7 @@ footer:
   <div class="container">
     <h1>クソ分かりやすい<br><span class="accent">Swift 並行処理</span></h1>
     <p class="subtitle">async/await、Tasks、そしてコンパイラがなぜあなたに怒鳴り続けるのかを、ついに理解しよう。</p>
-    <p class="credit"><a href="https://www.massicotte.org/">Matt Massicotte</a> 氏に多大な感謝を。Swift 並行処理を理解可能にしてくれました。<a href="https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=author">Tuist</a> 共同創設者の <a href="https://pepicrft.me">Pedro Piñera</a> がまとめました。問題を見つけた？ <a href="https://github.com/pepicrft/fuckingapproachableswiftconcurrency/issues/new">Issue を開く</a>か <a href="https://github.com/pepicrft/fuckingapproachableswiftconcurrency/pulls">PR を送る</a>。</p>
+    <p class="credit"><a href="https://www.massicotte.org/">Matt Massicotte</a> 氏に多大な感謝を。Swift 並行処理を理解可能にしてくれました。<a href="https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=author">Tuist</a> 共同創設者の <a href="https://pepicrft.me">Pedro Piñera</a> がまとめました。問題を見つけた？ <a href="https://github.com/tuist/fuckingapproachableswiftconcurrency/issues/new">Issue を開く</a>か <a href="https://github.com/tuist/fuckingapproachableswiftconcurrency/pulls">PR を送る</a>。</p>
   </div>
 </section>
 

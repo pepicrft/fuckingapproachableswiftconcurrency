@@ -22,7 +22,7 @@ footer:
   <div class="container">
     <h1>該死的易懂<br><span class="accent">Swift 並發</span></h1>
     <p class="subtitle">終於能理解 async/await、Tasks，以及為什麼編譯器一直對你吼叫。</p>
-    <p class="credit">非常感謝 <a href="https://www.massicotte.org/">Matt Massicotte</a> 讓 Swift 並發變得易懂。由 <a href="https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=author">Tuist</a> 共同創辦人 <a href="https://pepicrft.me">Pedro Piñera</a> 整理。發現問題？<a href="https://github.com/pepicrft/fuckingapproachableswiftconcurrency/issues/new">開啟 Issue</a> 或 <a href="https://github.com/pepicrft/fuckingapproachableswiftconcurrency/pulls">提交 PR</a>。</p>
+    <p class="credit">非常感謝 <a href="https://www.massicotte.org/">Matt Massicotte</a> 讓 Swift 並發變得易懂。由 <a href="https://tuist.dev?utm_source=fuckingapproachableswiftconcurrency&utm_medium=website&utm_campaign=author">Tuist</a> 共同創辦人 <a href="https://pepicrft.me">Pedro Piñera</a> 整理。發現問題？<a href="https://github.com/tuist/fuckingapproachableswiftconcurrency/issues/new">開啟 Issue</a> 或 <a href="https://github.com/tuist/fuckingapproachableswiftconcurrency/pulls">提交 PR</a>。</p>
   </div>
 </section>
 

@@ -665,15 +665,32 @@ th {
 .site-footer .container {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.site-footer p {
+  margin-bottom: 0;
 }
 
 .site-footer a {
   color: var(--color-text-muted);
+  text-decoration: underline;
 }
 
 .site-footer a:hover {
   color: var(--color-accent);
+}
+
+.site-footer .tribute {
+  padding: 0;
+}
+
+.site-footer .tuist-credit {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-top: 0.5rem;
 }
 
 /* Resource Links */
