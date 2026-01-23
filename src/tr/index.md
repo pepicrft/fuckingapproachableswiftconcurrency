@@ -107,8 +107,14 @@ struct ProfileView: View {
     @State private var avatar: Image?
 
     var body: some View {
-        avatar
-            .task { avatar = await downloadAvatar() }
+        Group {
+            if let avatar {
+                avatar
+            } else {
+                ProgressView()
+            }
+        }
+        .task { avatar = await downloadAvatar() }
     }
 }
 ```
@@ -120,8 +126,14 @@ struct ProfileView: View {
     @State private var avatar: Image?
 
     var body: some View {
-        avatar
-            .task(id: userID) { avatar = await downloadAvatar(for: userID) }
+        Group {
+            if let avatar {
+                avatar
+            } else {
+                ProgressView()
+            }
+        }
+        .task(id: userID) { avatar = await downloadAvatar(for: userID) }
     }
 }
 ```
