@@ -42,6 +42,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "markiv",
+      "name": "Vikram Kriplaney",
+      "avatar_url": "https://avatars.githubusercontent.com/u/55100?v=4",
+      "profile": "https://vikram.kriplaney.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7,
