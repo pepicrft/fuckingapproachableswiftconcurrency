@@ -487,6 +487,10 @@ class ViewModel {
             }
         }
     }
+
+    nonisolated func expensiveCalculation() async -> Data {
+        // CPU-intensive work
+    }
 }
 ```
 
